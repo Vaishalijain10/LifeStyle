@@ -1,0 +1,25 @@
+.Footer {
+  width: 100%;
+  background-color: #ad825c;
+  padding: 11px;
+  position: sticky !important;
+  bottom: 0;
+  z-index: 50;
+}
+
+.Footer-list {
+  color: white;
+  text-align: center;
+  font-size: 25px;
+}
+
+.Footer-list span {
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.Footer-list span:hover {
+  font-size: 26px;
+  color: #d6a54d; /* Assuming this is 'amber-950' in your custom color palette */
+}
