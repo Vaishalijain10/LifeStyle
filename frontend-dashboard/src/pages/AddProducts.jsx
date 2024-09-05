@@ -40,6 +40,18 @@ function AddProducts() {
     images,
   } = FormData;
 
+  // function -> count the images uploaded
+  function UploadProductImages(event) {
+    console.log("Arrived here! ");
+    const button = document.getElementById("ProductImages");
+    if (button.files.length > 6) {
+      console.log("");
+      alert("image more than 6!");
+    } else {
+      document.getElementById("submitProduct").removeAttribute("disabled");
+    }
+  }
+
   // dropdown Product Category
   function HandleChange(event) {
     // console.log(event.target.value);
@@ -239,20 +251,31 @@ function AddProducts() {
                 <input
                   className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out "
                   type="file"
-                  id="images"
+                  id="ProductImages"
+                  name="ProductImages"
                   multiple
                   accept="image/*"
+                  max="6"
                   required
                 />
-
                 <output id="image-count"></output>
+                <button
+                  type="button"
+                  className="bg-white text-amber-950 hover:bg-amber-900 transition duration-150 ease-in-out hover:shadow-lg active:bg-amber-900 "
+                  value="SaveProduct"
+                  onClick={UploadProductImages}
+                >
+                  Confirm Images
+                </button>
               </div>
 
               {/* button */}
               <button
                 className="w-full mb-[30px] bg-amber-950 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-amber-900 transition duration-150 ease-in-out hover:shadow-lg active:bg-amber-900 "
                 type="Submit"
+                disabled
                 onClick={HandleSubmit}
+                id="submitProduct"
               >
                 Submit
               </button>

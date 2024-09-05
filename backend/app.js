@@ -11,7 +11,7 @@ import UserRouter from "./Routes/Auth.js";
 const app = express();
 
 // 3000 is react port number
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: ["http://localhost:3000", "http://localhost:3001"] }));
 
 app.use(express.json());
 

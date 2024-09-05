@@ -57,14 +57,15 @@ const ProductSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  images: [
-    {
-      URL: String,
-      filename: String,
-    },
-  ],
 });
 
 const Product = mongoose.model("ProductForm", ProductSchema);
 
 export default Product;
+
+// images: [
+//     {
+//       URL: String,
+//       filename: String,
+//     },
+//   ],

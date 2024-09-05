@@ -4,24 +4,6 @@ import { useNavigate } from "react-router-dom";
 function Products() {
   const navigate = useNavigate();
 
-  // Anklet
-// Bangles
-// Belt
-// Bracelet
-// Brooches and pins
-// earrings
-// Hair clips and bands 
-// Handbags
-// Hats
-// neck piece
-// Nose ring
-// Ring
-// Scarves
-// Scrunchies
-// Toe ring
-// wallets
-// Watches
-
   return (
     <div>
       <h1>Exploring Products!</h1>
