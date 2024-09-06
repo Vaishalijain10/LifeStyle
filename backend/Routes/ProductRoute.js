@@ -10,17 +10,20 @@ const ProductRouter = express.Router();
 // multer -
 const Storage = multer.diskStorage({
   destination: function (req, file, callback) {
+    console.log("reached destination section for multer");
     // ProductImageUpload -> folder name is created in the backed
     // null -> no error found
     return callback(null, "./ProductImageUpload");
   },
   filename: function (req, file, callback) {
-    return callback(
-      null,
+    console.log("reached filename section for multer");
+    console.log(
       `${req.body.ProductCategory + req.body.ProductId}-${file.originalname}`
     );
+    return callback(null, `${Date.now}-${file.originalname}`);
   },
 });
+
 // schema type -> passing as an object -> multer syntax
 const uploadImage = multer({ Storage });
 
@@ -31,7 +34,7 @@ ProductRouter.post(
   async (req, res) => {
     console.log("Reached Add Product route");
     console.log(req.body);
-
+    console.log(req.files);
     try {
       const ProductAlreadyExist = await Product.findOne({
         ProductId: req.body.ProductId,

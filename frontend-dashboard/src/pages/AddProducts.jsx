@@ -20,7 +20,7 @@ function AddProducts() {
     SizeOfProduct: "",
     CountryOfOrigin: "",
     AboutItem: "",
-    images: {},
+    images: [],
   });
 
   // assigning values to form data -> input made by user is save in the form data.
@@ -45,11 +45,20 @@ function AddProducts() {
     console.log("Arrived here! ");
     const button = document.getElementById("ProductImages");
     if (button.files.length > 6) {
-      console.log("");
+      console.log("Image more than 6!");
       alert("image more than 6!");
+      document.getElementById("submitProduct").setAttribute("disabled", "true");
     } else {
       document.getElementById("submitProduct").removeAttribute("disabled");
     }
+  }
+
+  // function -> HandleUploadProductImages
+  function HandleUploadProductImages(event) {
+    console.log("HandleUploadProductImages :", event.target.files);
+    const imagesProduct = Array.from(event.target.files);
+    //
+    SetFormData((prev) => ({ ...prev, images: imagesProduct }));
   }
 
   // dropdown Product Category
@@ -76,7 +85,7 @@ function AddProducts() {
         alert("Product Id already Exists! " + ProductResponse.message);
       }
     } catch (error) {
-      console.log(error);
+      console.log("handle submit error :", error);
     }
   }
 
@@ -89,7 +98,7 @@ function AddProducts() {
           </h1>
 
           <div className="form-transparent">
-            <form className=" px-20" action="">
+            <form className=" px-20" encType="multipart/form-data">
               {/* Category Dropdown  */}
               <select
                 className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
@@ -256,12 +265,16 @@ function AddProducts() {
                   multiple
                   accept="image/*"
                   max="6"
+                  onChange={HandleUploadProductImages}
                   required
                 />
                 <output id="image-count"></output>
                 <button
                   type="button"
-                  className="bg-white text-amber-950 hover:bg-amber-900 transition duration-150 ease-in-out hover:shadow-lg active:bg-amber-900 "
+                  className="bg-white text-amber-950 
+                  hover:bg-amber-900 transition duration-150 ease-in-out 
+                  hover:shadow-lg 
+                  active:bg-amber-900 "
                   value="SaveProduct"
                   onClick={UploadProductImages}
                 >
@@ -271,9 +284,10 @@ function AddProducts() {
 
               {/* button */}
               <button
-                className="w-full mb-[30px] bg-amber-950 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-amber-900 transition duration-150 ease-in-out hover:shadow-lg active:bg-amber-900 "
-                type="Submit"
-                disabled
+                className="w-full mb-[30px] bg-amber-950 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md
+                 hover:bg-amber-900 transition duration-150 ease-in-out hover:shadow-lg
+                 active:bg-amber-900"
+                type="submit"
                 onClick={HandleSubmit}
                 id="submitProduct"
               >
