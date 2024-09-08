@@ -7,22 +7,21 @@ export default function ProductDetails() {
 
   // Use useSearchParams hook to get URL parameters
   const location = useLocation();
-  console.log("location : ", location);
+  // console.log("location : ", location);
   const ProductIdFromUrl = location.pathname.slice(16);
-  console.log(ProductIdFromUrl);
+  // console.log(ProductIdFromUrl);
 
   // use state ->
-  const [ProductDetails, setProductDetails] = useState({});
+  const [details, setDetails] = useState({});
 
   // use effect -> fetching Product Details from database and displaying through use effect
   useEffect(() => {
-    async function fetchingProductDetails() {
+    async function fetchProductDetails() {
       try {
-        // getProductDetails - function
         const response = await getProductDetails(ProductIdFromUrl);
         if (response.status) {
-          console.log("single product data: ", response.data);
-          setProductDetails(response.data);
+          console.log("Single product data: ", response.data);
+          setDetails(response.data);
         } else {
           console.log(response.message);
         }
@@ -30,13 +29,13 @@ export default function ProductDetails() {
         console.log(error);
       }
     }
-    // calling
-    fetchingProductDetails();
-  }, []);
+    fetchProductDetails();
+  }, [ProductIdFromUrl]); // Add ProductIdFromUrl as a dependency
 
   return (
     <div>
       <h1>Product Details</h1>
+      <h1>{details.ProductCategory}</h1>
     </div>
   );
 }

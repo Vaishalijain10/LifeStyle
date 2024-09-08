@@ -16,7 +16,7 @@ const ProductSchema = mongoose.Schema({
     required: true,
   },
   ProductId: {
-    type: Number,
+    type: String,
     required: true,
   },
   Name: {
@@ -38,10 +38,7 @@ const ProductSchema = mongoose.Schema({
   Discount: {
     type: Number,
   },
-  NetQuantity: {
-    type: Number,
-    required: true,
-  },
+
   MaterialType: {
     type: String,
     required: true,

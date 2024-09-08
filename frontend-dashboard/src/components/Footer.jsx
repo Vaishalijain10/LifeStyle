@@ -3,11 +3,9 @@ import "../Style/Footer.css";
 
 export default function Footer() {
   return (
-    <div className="Footer w-full bg-[#AD825C] px-8 py-[11px] sticky bottom-0 z-50">
-      <h1 className="Footer-list text-white text-center text-[25px]">
-        <span className="font-semibold hover:text-[26px] hover:text-amber-950 ease-in-out duration-200 cursor-pointer">
-          © Dashboard Vaishali & Devansh!
-        </span>
+    <div className="Footer w-full bg-[#AD825C] py-[10px] sticky bottom-0 z-50">
+      <h1 className="text-center font-bold text-white cursor-pointer hover:text-black hover:text-[20px] hover:my-[-3px]">
+        © Dashboard Vaishali - Devansh!
       </h1>
     </div>
   );
