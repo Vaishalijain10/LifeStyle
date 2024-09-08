@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import Products from "./pages/Products";
 import AddProducts from "./pages/AddProducts";
 import { useEffect, useState } from "react";
+import NotFound from "./pages/NotFound";
 
 function App() {
   var [isLoggedIn, setIsLoogedIn] = useState(
@@ -37,6 +38,7 @@ function App() {
                 path="/AddProducts"
                 element={isLoggedIn ? <AddProducts /> : <Login />}
               />
+              <Route path="/*" Component={NotFound} />
             </Routes>
           </div>
           {/* Footer Component */}
