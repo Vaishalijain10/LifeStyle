@@ -23,6 +23,7 @@ export default function ProductDetails() {
         if (response.status) {
           console.log("single product data: ", response.data);
           setProductDetails(response.data);
+          console.log(ProductDetails);
         } else {
           console.log(response.message);
         }
@@ -32,7 +33,7 @@ export default function ProductDetails() {
     }
     // calling
     fetchingProductDetails();
-  }, []);
+  });
 
   return (
     <div>

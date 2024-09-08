@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Style/RegisterLoginForgotPassword.css";
 
-
 export default function Login() {
   const Navigate = useNavigate();
 
@@ -25,30 +24,21 @@ export default function Login() {
   // activating submit button
   async function LoginHandleSubmit(event) {
     event.preventDefault();
-    // console -> form data
-    console.log(LoginFormData);
+
     // .env data
     const email = "Admin@gmail.com";
     const password = "123456789";
-    console.log(".env data " + email + password);
     // user input
     const UserInputEmail = LoginFormData.Email;
     const UserInputPassword = LoginFormData.Password;
     // form data === .env email password
-    console.log(
-      UserInputEmail +
-        " UE " +
-        email +
-        " E " +
-        UserInputPassword +
-        " UP " +
-        password +
-        " P "
-    );
+
     if (UserInputEmail === email && UserInputPassword === password) {
+      localStorage.setItem("Admin", "###1");
+      window.location.reload();
       Navigate("/");
     } else {
-      alert("Admin email and password does not match!");
+      alert("Admin email and password do not match!");
     }
   }
 

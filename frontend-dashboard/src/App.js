@@ -9,8 +9,16 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Products from "./pages/Products";
 import AddProducts from "./pages/AddProducts";
+import { useEffect, useState } from "react";
 
 function App() {
+  var [isLoggedIn, setIsLoogedIn] = useState(
+    localStorage.getItem("Admin") === "###1"
+  );
+
+  useEffect(() => {
+    setIsLoogedIn(localStorage.getItem("Admin") === "###1");
+  }, []);
   return (
     <>
       <div className="App">
@@ -19,13 +27,16 @@ function App() {
 
         <Router>
           {/* NavBar Component */}
-          <NavBar />
+          <NavBar login={isLoggedIn} />
           <div className="content">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home login={isLoggedIn} />} />
               <Route path="/Login" element={<Login />} />
               <Route path="/Products" element={<Products />} />
-              <Route path="/AddProducts" element={<AddProducts />} />
+              <Route
+                path="/AddProducts"
+                element={isLoggedIn ? <AddProducts /> : <Login />}
+              />
             </Routes>
           </div>
           {/* Footer Component */}
