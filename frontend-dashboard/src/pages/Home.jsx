@@ -1,16 +1,23 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Home(props) {
   // we use "useEffect" -> when any change occur in the browser.
-  const navigate = useNavigate();
+  const navigate = useNavigate(props);
   return (
     <div>
-      <h1>Hello!</h1>
+      {props.login ? (
+        <h1>Hello Admin How are you?</h1>
+      ) : (
+        <h1 className="bg-[#723682] text-center">
+          Admin You are not logged in
+        </h1>
+      )}
+
       <div className="flex gap-[18%]">
         <button
-          onClick={() => navigate("Products")}
-          className="w-[20%] mb-[30px] bg-amber-950 text-white px-12 py-5 text-sm font-medium uppercase rounded shadow-md hover:bg-amber-900 transition duration-150 ease-in-out hover:shadow-lg active:bg-amber-900 "
+          onClick={() => navigate("/Products")}
+          className="w-[200px] md:w-[20%] mb-[30px] bg-[#568382] text-white px-6 py-2 text-sm font-medium uppercase rounded shadow-md hover:bg-amber-900 transition duration-150 ease-in-out hover:shadow-lg active:bg-amber-900 "
         >
           Explore Products
         </button>

@@ -11,6 +11,7 @@ import Products from "./pages/Products";
 import AddProducts from "./pages/AddProducts";
 import { useEffect, useState } from "react";
 import NotFound from "./pages/NotFound";
+import ForgetPassword from "./pages/ForgetPassword";
 
 function App() {
   var [isLoggedIn, setIsLoogedIn] = useState(
@@ -34,6 +35,7 @@ function App() {
               <Route path="/" element={<Home login={isLoggedIn} />} />
               <Route path="/Login" element={<Login />} />
               <Route path="/Products" element={<Products />} />
+              <Route path="/forgot-password" element={<ForgetPassword />} />
               <Route
                 path="/AddProducts"
                 element={isLoggedIn ? <AddProducts /> : <Login />}
