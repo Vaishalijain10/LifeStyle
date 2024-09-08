@@ -87,19 +87,19 @@ function AddProducts() {
 
   return (
     <div className="background-image pl-[10%] md:pl-30% h-full pt-10">
-      <div className="w-[50%] md:w-[300px] border-2 border-white rounded-md ">
+      <div className="w-[50%] md:w-[500px] border-2 border-white rounded-md ">
         <h1 className="text-xl text-center mb-1 text-black font-semibold bg-white">
           Add Product
         </h1>
 
-        <div className="form-transparent ">
+        <div className="form-transparent">
           <form
             onSubmit={HandleSubmit}
-            className="overflow-y-scroll h-[300px] pr-2"
+            className="overflow-y-scroll h-[700px] pr-2"
           >
             {/* Category Dropdown  */}
             <select
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               name="ProductCategory"
               value={ProductCategory}
               id="ProductCategory"
@@ -126,7 +126,7 @@ function AddProducts() {
               value={Name}
               onChange={HandleChange}
               type="String"
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -137,7 +137,7 @@ function AddProducts() {
               value={StockAvailable}
               onChange={HandleChange}
               type="Number"
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -148,7 +148,7 @@ function AddProducts() {
               value={Rating}
               onChange={HandleChange}
               type="Number"
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
             {/* // Price -> // discount if available // Net Quantity // Material
@@ -161,7 +161,7 @@ function AddProducts() {
               value={Price}
               onChange={HandleChange}
               type="Number"
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -172,7 +172,7 @@ function AddProducts() {
               value={Discount}
               onChange={HandleChange}
               type="Number"
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -183,7 +183,7 @@ function AddProducts() {
               value={MaterialType}
               onChange={HandleChange}
               type="String"
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -194,7 +194,7 @@ function AddProducts() {
               value={SizeOfProduct}
               onChange={HandleChange}
               type="Number"
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -205,7 +205,7 @@ function AddProducts() {
               value={CountryOfOrigin}
               onChange={HandleChange}
               type="String"
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -216,7 +216,7 @@ function AddProducts() {
               value={AboutItem}
               onChange={HandleChange}
               type="text"
-              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[150px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -229,7 +229,7 @@ function AddProducts() {
                 Choose Images (Max 6)
               </label>
               <input
-                className="w-full px-2 py-2 mb-3 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out "
+                className="w-full px-2 py-2 mb-3 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out "
                 type="file"
                 id="ProductImages"
                 name="ProductImages"
