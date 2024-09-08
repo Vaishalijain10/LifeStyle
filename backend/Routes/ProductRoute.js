@@ -53,7 +53,7 @@ ProductRouter.post(
     } catch (error) {
       console.log(error);
       res.send({
-        success: false,
+        status: false,
         message: "Something went wrong in the database.",
       });
     }
