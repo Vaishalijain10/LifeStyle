@@ -9,16 +9,18 @@ const ProductRouter = express.Router();
 
 // multer -
 const Storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    return callback(null, "./ProductImages");
+  destination: function (req, file, cb) {
+    console.log(file.originalname);
+    return cb(null, "./folder/");
   },
-  filename: function (req, file, callback) {
-    return callback(null, `${req.body.ProductId}-${file.originalname}`);
+  filename: function (req, file, cb) {
+    console.log(file.originalname);
+    return cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
 // schema type -> passing as an object -> multer syntax
-const uploadImage = multer({ Storage });
+const uploadImage = multer({ storage: Storage });
 
 // backend table name /AddProduct known as endpoint
 ProductRouter.post(
@@ -40,14 +42,14 @@ ProductRouter.post(
 
         // creating object and send it to the frontend
         return res.send({
-          success: true,
+          status: true,
           message: "Product added successfully.",
         });
       }
 
       // if Product already exist than below code will work!
       console.log("Product Id already exists!");
-      return res.send({ success: false, message: "ProductId already exists!" });
+      return res.send({ status: false, message: "ProductId already exists!" });
     } catch (error) {
       console.log(error);
       res.send({

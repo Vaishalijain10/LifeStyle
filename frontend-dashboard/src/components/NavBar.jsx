@@ -12,7 +12,7 @@ export default function NavBar(props) {
 
   return (
     // Login/register || Links -> #AD825C
-    <div className="NavBar bg-[#AD825C] flex justify-between p-2 md:px-5 shadow-sm shadow-slate-400 sticky top-0 h-[50px]">
+    <div className="NavBar bg-[#AD825C] flex justify-between p-2 md:px-5 shadow-sm shadow-slate-400 sticky top-0 h-[50px] z-50">
       <div className="NavBar-Logo text-[#FFFFFF] cursor-pointer flex gap-4 transition-colors md:ml-[30px]">
         {/* logo */}
 

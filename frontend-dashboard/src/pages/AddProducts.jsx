@@ -10,13 +10,11 @@ function AddProducts() {
   const [files, setFiles] = useState([]);
   const [staticData, SetStaticData] = useState({
     ProductCategory: "Heels",
-    ProductId: "Test102",
     Name: "Black High Heels",
     StockAvailable: 10,
     Rating: 3.5,
     Price: 1000,
     Discount: 10,
-    NetQuantity: 10,
     MaterialType: "Acrylic",
     SizeOfProduct: "10",
     CountryOfOrigin: "USA",
@@ -27,13 +25,11 @@ function AddProducts() {
   // assigning values to form data -> input made by user is save in the form data.
   var {
     ProductCategory,
-    ProductId,
     Name,
     StockAvailable,
     Rating,
     Price,
     Discount,
-    NetQuantity,
     MaterialType,
     SizeOfProduct,
     CountryOfOrigin,
@@ -70,10 +66,14 @@ function AddProducts() {
     Object.keys(staticData).forEach((key) => {
       formData.append(key, staticData[key]);
     });
+    const ProductId = ProductCategory + "-" + Date.now();
+    formData.append("ProductId", ProductId);
+    console.log(formData);
 
     try {
       const response = await AddProduct(formData);
-      if (response.success) {
+      console.log(response);
+      if (response.status) {
         alert("Product added Successfully!");
         Navigate("/Products");
       } else {
@@ -86,17 +86,20 @@ function AddProducts() {
   }
 
   return (
-    <div className="background-image bg-black pb-[5.43%] pt-[5.43%] h-full overflow-y-hidden no-scrollbar ">
-      <div className="container w-[50%]  border-2 border-white">
-        <h1 className="text-xl text-center mt-[-15px] mb-1 text-black font-semibold ">
+    <div className="background-image pl-[10%] md:pl-30% h-full pt-10">
+      <div className="w-[50%] md:w-[300px] border-2 border-white rounded-md ">
+        <h1 className="text-xl text-center mb-1 text-black font-semibold bg-white">
           Add Product
         </h1>
 
-        <div className="form-transparent">
-          <form className=" px-20" onSubmit={HandleSubmit}>
+        <div className="form-transparent ">
+          <form
+            onSubmit={HandleSubmit}
+            className="overflow-y-scroll h-[300px] pr-2"
+          >
             {/* Category Dropdown  */}
             <select
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               name="ProductCategory"
               value={ProductCategory}
               id="ProductCategory"
@@ -116,17 +119,6 @@ function AddProducts() {
               <option value="Watches">Watches</option>
             </select>
 
-            {/* Product Id  */}
-            <input
-              placeholder=" Product Id"
-              name="ProductId"
-              value={ProductId}
-              onChange={HandleChange}
-              type="String"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
-              required
-            />
-
             {/* Name  */}
             <input
               placeholder="Name"
@@ -134,7 +126,7 @@ function AddProducts() {
               value={Name}
               onChange={HandleChange}
               type="String"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -145,7 +137,7 @@ function AddProducts() {
               value={StockAvailable}
               onChange={HandleChange}
               type="Number"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -156,7 +148,7 @@ function AddProducts() {
               value={Rating}
               onChange={HandleChange}
               type="Number"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
             {/* // Price -> // discount if available // Net Quantity // Material
@@ -169,7 +161,7 @@ function AddProducts() {
               value={Price}
               onChange={HandleChange}
               type="Number"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -180,18 +172,7 @@ function AddProducts() {
               value={Discount}
               onChange={HandleChange}
               type="Number"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
-              required
-            />
-
-            {/* Net Quantity */}
-            <input
-              placeholder="Net Quantity"
-              name="NetQuantity"
-              value={NetQuantity}
-              onChange={HandleChange}
-              type="Number"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -202,7 +183,7 @@ function AddProducts() {
               value={MaterialType}
               onChange={HandleChange}
               type="String"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -213,7 +194,7 @@ function AddProducts() {
               value={SizeOfProduct}
               onChange={HandleChange}
               type="Number"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -224,7 +205,7 @@ function AddProducts() {
               value={CountryOfOrigin}
               onChange={HandleChange}
               type="String"
-              className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
@@ -235,17 +216,20 @@ function AddProducts() {
               value={AboutItem}
               onChange={HandleChange}
               type="text"
-              className="w-full  px-4 py-6 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="h-[25px] w-full mb-3 px-4 py-1 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
 
             {/* image */}
             <div className="image-upload">
-              <label htmlFor="image-upload" className="text-white px-4 py-6">
+              <label
+                htmlFor="image-upload"
+                className="text-white px-3 text-[12px]"
+              >
                 Choose Images (Max 6)
               </label>
               <input
-                className="w-full mb-3 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out "
+                className="w-full px-2 py-2 mb-3 text-[12px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out "
                 type="file"
                 id="ProductImages"
                 name="ProductImages"
@@ -259,9 +243,7 @@ function AddProducts() {
 
             {/* button */}
             <button
-              className="w-full mb-[30px] bg-amber-950 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md
-                 hover:bg-amber-900 transition duration-150 ease-in-out hover:shadow-lg
-                 active:bg-amber-900"
+              className="w-full mb-[30px] bg-[rgb(46,166,175)] text-white px-7 py-3 text-sm font-semibold uppercase rounded hover:bg-[rgb(218,68,248)]"
               type="submit"
               id="submitProduct"
             >
