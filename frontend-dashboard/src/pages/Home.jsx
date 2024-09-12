@@ -24,8 +24,8 @@ export default function Home(props) {
       </div>
 
       <br />
-      <h1>Notification </h1>
-      <h1>create a product Listing</h1>
+      {/* <h1>Notification </h1>
+      <h1>create a product Listing</h1> 
       <h1>Edit a product</h1>
       <h1>delete a product</h1>
       <h1>filter in categories - ring, earrings</h1>
@@ -35,7 +35,7 @@ export default function Home(props) {
       <h1>accounts - which customer purchased what - </h1>
       <h1> total purchased</h1>
       <h1>Orders pending / completed </h1>
-      <h1>logout </h1>
+      <h1>logout </h1> */}
     </div>
   );
 }

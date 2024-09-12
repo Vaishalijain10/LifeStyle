@@ -7,8 +7,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
-export default function ImgMediaCard(props) {
+export default function MediaCard(props) {
   const navigate = useNavigate();
+  const UrlImg = `http://localhost:1008/${props.given.images[0]}`;
+  console.log(UrlImg);
   return (
     <Card
       sx={{ maxWidth: 345 }}
@@ -18,14 +20,14 @@ export default function ImgMediaCard(props) {
         navigate(`/ProductDetails/${props.given._id}`);
       }}
     >
-      {/* PRODUCT Category */}
       <h1 className="text-lg font-bold p-4">{props.given.ProductCategory}</h1>
 
-      <CardMedia  
+      {/* Product category */}
+      <CardMedia
         component="img"
+        className="h-[300px] w-[250px]" // Updated to match the height attribute
         alt="IMG CARD"
-        height="140"
-        image={props.given.images}
+        image={UrlImg}
       />
 
       <CardContent>

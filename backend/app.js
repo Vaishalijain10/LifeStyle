@@ -21,11 +21,14 @@ app.use("/users", UserRouter);
 // product add - frontend dashboard to add product
 app.use("/products", ProductRouter);
 
+// static --> to get access
+app.use(express.static("productImages"));
+
 dotenv.config();
 
 dbConfig.dbConnection();
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 1008;
 
 app.listen(port, () => {
   console.log(`Server is listening on the ${port} port`);

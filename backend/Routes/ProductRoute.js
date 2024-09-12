@@ -10,12 +10,12 @@ const ProductRouter = express.Router();
 // multer -
 const Storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    console.log(file.originalname);
-    return cb(null, "./folder/");
+    // console.log(file.originalname);
+    return cb(null, "./productImages/");
   },
   filename: function (req, file, cb) {
     console.log(file.originalname);
-    return cb(null, `${Date.now()}-${file.originalname}`);
+    return cb(null, file.originalname);
   },
 });
 
@@ -30,26 +30,26 @@ ProductRouter.post(
     console.log("Reached Add Product route");
     console.log(req.body.ProductId);
     console.log(req.files);
+
+    let ImgArray = [];
+    Array.from(req.files).forEach((element) => {
+      ImgArray.push(element.originalname);
+    });
+
+    // backend to route
+    req.body.images = ImgArray;
+    console.log(req.body);
+
     try {
-      const ProductAlreadyExist = await Product.findOne({
-        ProductId: req.body.ProductId,
+      const newProduct = await Product(req.body);
+      newProduct.save();
+      console.log("Product added successfully.");
+
+      // creating object and send it to the frontend
+      return res.send({
+        status: true,
+        message: "Product added successfully.",
       });
-
-      if (ProductAlreadyExist === null) {
-        const newProduct = await Product(req.body);
-        newProduct.save();
-        console.log("Product added successfully.");
-
-        // creating object and send it to the frontend
-        return res.send({
-          status: true,
-          message: "Product added successfully.",
-        });
-      }
-
-      // if Product already exist than below code will work!
-      console.log("Product Id already exists!");
-      return res.send({ status: false, message: "ProductId already exists!" });
     } catch (error) {
       console.log(error);
       res.send({
@@ -62,9 +62,11 @@ ProductRouter.post(
 
 ProductRouter.get("/fetchProducts", async (req, res) => {
   console.log("fetching product");
+  // retrieving images from the folder -> ./productImages and file name is same as saved in the backend in the form of array
 
   try {
-    const details = await Product.find();
+    // where clause -> SQL AND mongo -> pass object
+    const details = await Product.find({ Admin: "Vaishali" });
     if (details == null) {
       console.log("null product details");
       return res.send({ status: false, message: "Product DataBase is empty" });

@@ -5,11 +5,13 @@ import { useNavigate } from "react-router-dom";
 function AddProducts() {
   const Navigate = useNavigate();
   // sending data in the backend -> using states and hooks
-  //  initial state -> Initially setting variables names as empty which will be further given input by user and send it to backend.
+  // initial state -> Initially setting variables names as empty which will be further given input by user and send it to backend.
   // value in input field = form data field
   const [files, setFiles] = useState([]);
+  // dummy data base!!
   const [staticData, SetStaticData] = useState({
-    ProductCategory: "Heels",
+    Admin: "Vaishali",
+    ProductCategory: "Shoes",
     Name: "Black High Heels",
     StockAvailable: 10,
     Rating: 3.5,
@@ -24,6 +26,7 @@ function AddProducts() {
 
   // assigning values to form data -> input made by user is save in the form data.
   var {
+    Admin,
     ProductCategory,
     Name,
     StockAvailable,
@@ -51,22 +54,25 @@ function AddProducts() {
     // testing  form data
     // const FormData = { name: "Product", id: 3 };
     if (files.length < 1) {
-      return alert("Must Pick atleast 1 picture");
+      return alert("Must Pick at least 1 picture");
     } else if (files.length > 6) {
       return alert(
         "You can pick at most 6 images. Subscribe Premium for more images"
       );
     } else {
+      console.log("Something Something!");
     }
-
+    const ProductId = ProductCategory + "-" + Date.now();
     const formData = new FormData();
-    files.forEach((ele) => {
-      formData.append("files", ele);
+
+    files.forEach((ele, index) => {
+      // modified file name
+      formData.append("files", ele, `${ProductId}-${index}.jpg`);
     });
     Object.keys(staticData).forEach((key) => {
       formData.append(key, staticData[key]);
     });
-    const ProductId = ProductCategory + "-" + Date.now();
+
     formData.append("ProductId", ProductId);
     console.log(formData);
 
@@ -80,7 +86,7 @@ function AddProducts() {
         alert(response.message);
       }
     } catch (error) {
-      alert("A technical error occured. We are sorry. Report");
+      alert("A technical error occurred. We are sorry. Report");
       console.log("handle submit error :", error);
     }
   }
@@ -97,6 +103,21 @@ function AddProducts() {
             onSubmit={HandleSubmit}
             className="overflow-y-scroll h-[700px] pr-2"
           >
+            {/* Admin */}
+            <select
+              className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              name="Admin"
+              value={Admin}
+              id="Admin"
+              onChange={HandleChange}
+            >
+              <option value="" disabled className="text-gray-700">
+                Admin
+              </option>
+              <option value="Vaishali">Vaishali</option>
+              <option value="Devansh">Devansh</option>
+            </select>
+
             {/* Category Dropdown  */}
             <select
               className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"

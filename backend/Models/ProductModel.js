@@ -11,6 +11,10 @@ import mongoose from "mongoose";
 // Country of Origin
 // About the item
 const ProductSchema = mongoose.Schema({
+  Admin: {
+    type: String,
+    required: true,
+  },
   ProductCategory: {
     type: String,
     required: true,
@@ -54,12 +58,10 @@ const ProductSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  images: [
-    {
-      URL: String,
-      filename: String,
-    },
-  ],
+  images: {
+    type: Array,
+    filename: String,
+  },
 });
 
 const Product = mongoose.model("ProductForm", ProductSchema);
