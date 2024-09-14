@@ -91,9 +91,25 @@ UserRouter.post("/login", async (req, res) => {
 });
 
 // route setup for profile and its validation
-UserRouter.get("/auth-profile", async (req, res) => {
+UserRouter.post("/auth-profile", async (req, res) => {
   console.log("Reached here : auth-profile route");
+  // frontend id is coming here-->
   console.log(req.body);
+  // fetching backend id from here
+  users
+    .findOne({ _id: req.body.Token_id })
+    .then((response) => {
+      if (response !== null) {
+        console.log("Object found");
+        res.send({ status: true, userInfo: response });
+      } else {
+        res.send({ status: false, message: "user not logged in" });
+      }
+    })
+    .catch((error) => {
+      console.log("error at auth.js", error);
+      return res.send({ status: false, message: error.message });
+    });
 });
 
 export default UserRouter;

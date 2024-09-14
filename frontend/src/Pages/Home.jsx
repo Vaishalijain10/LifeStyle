@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getDetailsInCard } from "../Api/Basic";
 import MediaCard from "../Components/Card";
 
-export default function Home() {
+export default function Home(props) {
   // we use "useEffect" -> when any change occur in the browser.
 
   // array
@@ -50,11 +50,10 @@ export default function Home() {
     <div>
       {/* <h1>Home</h1> */}
       {/* Condition rendering -> before login and after login */}
-      {/* {localStorage.getItem("Token") && (
-        <div>
-          <p>HELLO {user ? user.FullName : localStorage.getItem("Name")}</p>
-        </div>
-      )} */}
+
+      <div>
+        <p>Hey,{props.userData ? props.userData.FullName : "user!"}</p>
+      </div>
 
       {/* Search box */}
       <div className="flex justify-center items-center mt-8">

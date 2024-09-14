@@ -3,8 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import "../Style/RegisterLoginForgotPassword.css";
 import { LoginUser } from "../Api/Basic";
 
-export default function Login() {
+export default function Login(props) {
   const Navigate = useNavigate();
+
+  // securing url
+  if (props.userData) {
+    Navigate("/");
+  }
 
   // initial state -> Initially setting variables names as empty which will be further given input by user and send it to backend.
   const [LoginFormData, SetLoginFormData] = useState({

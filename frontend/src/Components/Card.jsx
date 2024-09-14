@@ -5,7 +5,7 @@ import * as React from "react";
 // import CardMedia from "@mui/material/CardMedia";
 // import Button from "@mui/material/Button";
 // import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function MediaCard(props) {
   // const navigate = useNavigate();

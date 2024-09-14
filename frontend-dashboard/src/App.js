@@ -14,12 +14,12 @@ import NotFound from "./pages/NotFound";
 import ForgetPassword from "./pages/ForgetPassword";
 
 function App() {
-  var [isLoggedIn, setIsLoogedIn] = useState(
+  var [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("Admin") === "###1"
   );
 
   useEffect(() => {
-    setIsLoogedIn(localStorage.getItem("Admin") === "###1");
+    setIsLoggedIn(localStorage.getItem("Admin") === "###1");
   }, []);
   return (
     <>

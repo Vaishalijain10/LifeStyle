@@ -15,32 +15,39 @@ import "./Style/app.css";
 import ProductDetails from "./Pages/ProductDetails";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NotFound404 from "./Pages/NotFound404";
 
 function App() {
   // setting up route in frontend
-  const IsLoggedIn = localStorage.getItem(("Token") !== "");
+  const [IsLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("Token") !== null
+  );
+
   const [user, setUser] = useState(null);
+
   // creating pipeline (streams) -> modern syntax
   useEffect(() => {
-    if (localStorage.getItem("Token") !== undefined) {
-      setUser(null);
-    } else {
-      console.log(user);
+    if (IsLoggedIn) {
+      console.log("User logged in!");
       // url -> send response -> user is valid or not
       axios
-        .post(
-          "http://localhost:1008/users/auth-profile",
-          localStorage.getItem("Token")
-        )
-        .then((response) => response.json())
-        .then((data) => setUser(data)) // Update user state with API data
+        .post("http://localhost:1008/users/auth-profile", {
+          Token_id: localStorage.getItem("Token"),
+        })
+        .then((response) => response.data)
+        .then((data) => {
+          if (data.status) {
+            setUser(data.userInfo);
+            console.log("user details :", data.userInfo);
+            console.log("user name :", data.userInfo.FullName);
+          }
+        }) // Update user state with API data
         .catch((error) =>
-          console.error(
-            "Error fetching user data in app.js(frontend):",
-            error,
-            user
-          )
+          console.error("Error fetching user data in app.js(frontend):", error)
         );
+    } else {
+      console.log("User not logged in!", user);
+      setIsLoggedIn(false);
     }
   }, [IsLoggedIn]); // null dependency-array to run only once
 
@@ -52,22 +59,41 @@ function App() {
 
         <Router>
           {/* NavBar Component */}
+          {/*  userData={user} --> sending props */}
           <NavBar />
           <div className="content">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/Register" element={<Register />} />
-              <Route path="/Login" element={<Login />} />
-              <Route path="/ForgotPassword" element={<ForgotPassword />} />
-              <Route path="/Profile" element={<Profile />} />
+              <Route path="/" element={<Home userData={user} />} />
+              <Route
+                path="/Register"
+                element={IsLoggedIn ? <Home /> : <Register />}
+              />
+              <Route path="/Login" element={<Login userData={user} />} />
+              <Route
+                path="/ForgotPassword"
+                element={IsLoggedIn ? <Home /> : <ForgotPassword />}
+              />
+              <Route path="/Profile" element={<Profile userData={user} />} />
               <Route path="/BestChoice" element={<BestChoice />} />
-              <Route path="/WishList" element={<WishList />} />
-              <Route path="/MyOrders" element={<MyOrders />} />
-              <Route path="/Cart" element={<Cart />} />
+              <Route
+                path="/WishList"
+                element={IsLoggedIn ? <WishList /> : <Login />}
+              />
+              <Route
+                path="/MyOrders"
+                element={IsLoggedIn ? <MyOrders /> : <Login />}
+              />
+              <Route
+                path="/Cart"
+                element={IsLoggedIn ? <Cart userData={user} /> : <Login />}
+              />
+
               <Route
                 path="/ProductDetails/:Product_id"
                 element={<ProductDetails />}
               />
+
+              <Route path="/*" element={<NotFound404 />}></Route>
             </Routes>
           </div>
           {/* Footer Component */}
