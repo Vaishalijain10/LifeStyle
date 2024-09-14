@@ -33,3 +33,19 @@ export const getProductDetails = async (ProductIdFromUrl) => {
   );
   return response.data;
 };
+
+// fetching user details - profile section also
+// export const getUserDetails = async (token) => {
+//   try {
+//     console.log("Fetching user details");
+//     const response = await axios.get(`${url}/userDetails`, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error fetching user details:", error);
+//     throw error; // Rethrow the error to handle it in the calling function
+//   }
+// };

@@ -102,4 +102,7 @@ ProductRouter.get("/ProductDetails/:Product_id", async (req, res) => {
   }
 });
 
+
+
+
 export default ProductRouter;

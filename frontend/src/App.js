@@ -13,8 +13,37 @@ import Footer from "./Components/Footer";
 import ForgotPassword from "./Pages/ForgotPassword";
 import "./Style/app.css";
 import ProductDetails from "./Pages/ProductDetails";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
+  // setting up route in frontend
+  const IsLoggedIn = localStorage.getItem(("Token") !== "");
+  const [user, setUser] = useState(null);
+  // creating pipeline (streams) -> modern syntax
+  useEffect(() => {
+    if (localStorage.getItem("Token") !== undefined) {
+      setUser(null);
+    } else {
+      console.log(user);
+      // url -> send response -> user is valid or not
+      axios
+        .post(
+          "http://localhost:1008/users/auth-profile",
+          localStorage.getItem("Token")
+        )
+        .then((response) => response.json())
+        .then((data) => setUser(data)) // Update user state with API data
+        .catch((error) =>
+          console.error(
+            "Error fetching user data in app.js(frontend):",
+            error,
+            user
+          )
+        );
+    }
+  }, [IsLoggedIn]); // null dependency-array to run only once
+
   return (
     <>
       <div className="App">
@@ -35,7 +64,10 @@ function App() {
               <Route path="/WishList" element={<WishList />} />
               <Route path="/MyOrders" element={<MyOrders />} />
               <Route path="/Cart" element={<Cart />} />
-              <Route path="/ProductDetails/:Product_id" element={<ProductDetails />} />
+              <Route
+                path="/ProductDetails/:Product_id"
+                element={<ProductDetails />}
+              />
             </Routes>
           </div>
           {/* Footer Component */}

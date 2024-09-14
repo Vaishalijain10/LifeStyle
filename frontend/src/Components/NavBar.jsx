@@ -60,6 +60,7 @@ export default function NavBar() {
                   localStorage.removeItem("Token");
                   setLoggedIn(false);
                   Navigate("/login");
+                  window.location.reload();
                 }}
               >
                 Logout

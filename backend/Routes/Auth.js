@@ -46,7 +46,6 @@ UserRouter.post("/register", async (req, res) => {
 UserRouter.post("/login", async (req, res) => {
   console.log("Login Reached here!!!!!!");
   console.log(req.body);
-
   try {
     // process -> checking email id from user input and check in the database weather the email id  already exists or not.
     // LoginUserExist -> database checking and finding email that matches with frontend user input
@@ -89,6 +88,12 @@ UserRouter.post("/login", async (req, res) => {
       message: "Opps! Database error!",
     });
   }
+});
+
+// route setup for profile and its validation
+UserRouter.get("/auth-profile", async (req, res) => {
+  console.log("Reached here : auth-profile route");
+  console.log(req.body);
 });
 
 export default UserRouter;
