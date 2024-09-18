@@ -18,8 +18,3 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-
-.Footer-list span:hover {
-  font-size: 26px;
-  color: #d6a54d; /* Assuming this is 'amber-950' in your custom color palette */
-}

@@ -51,36 +51,21 @@ export default function Home(props) {
       {/* <h1>Home</h1> */}
       {/* Condition rendering -> before login and after login */}
 
-      <div>
-        <p>Hey,{props.userData ? props.userData.FullName : "user!"}</p>
-      </div>
-
-      {/* Search box */}
-      <div className="flex justify-center items-center mt-8">
-        <div className="flex space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm p-2 w-[600px]">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full p-3 text-gray-700 bg-transparent border-none focus:outline-none focus:ring-0"
-          />
-          <button className="bg-[#AD825C] text-white rounded-lg p-3 hover:bg-[#8C5A4F] transition-colors duration-300 ease-in-out">
-            Search
-          </button>
+      <div className="flex justify-between items-center w-full p-5 bg-gray-100">
+        {/* Username */}
+        <div className="flex-shrink-0">
+          <p className="text-[28px] font-semibold">
+            Hey, {props.userData ? props.userData.FullName : "User!"}
+          </p>
         </div>
-      </div>
 
-      {/* slider */}
-
-      {/* cards - foreach used to display card*/}
-
-      {/* Category Selection */}
-      {/* Category Selection */}
-      <div className="flex justify-center mt-4">
-        <div className="flex space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm p-2 w-[600px]">
+        {/* Centered Search Box and Category Filter */}
+        <div className="flex items-center space-x-3 mx-auto">
+          {/* Category Selection */}
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="text-center w-full p-3 text-gray-700 bg-transparent border-none focus:outline-none focus:ring-0"
+            className="text-center p-3 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-0"
           >
             <option value="All">All Categories</option>
             <option value="Bangles">Bangles</option>
@@ -93,19 +78,31 @@ export default function Home(props) {
             <option value="Wallets">Wallets</option>
             <option value="Watches">Watches</option>
           </select>
+
+          {/* Search Box */}
+          <div className="flex bg-white border border-gray-300 rounded-lg shadow-sm p-2 w-[480px]">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="w-full p-3 text-gray-700 bg-transparent border-none focus:outline-none focus:ring-0"
+            />
+            <button className="bg-[#AD825C] text-white rounded-lg p-3 hover:bg-[#8C5A4F] transition-colors duration-300 ease-in-out">
+              Search
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Display the heading based on selected category */}
-      <h1 className="text-2xl font-bold mt-8 mb-6 text-center">
-        {selectedCategory === "All"
-          ? "All Products"
-          : `${selectedCategory} Products`}
-      </h1>
+      <div className="p-4 bg-gray-900 mt-8 rounded-lg ml-10 mr-10">
+        {/* Display the heading based on selected category */}
+        <h1 className="text-2xl font-bold mt-8 mb-6 text-center text-white uppercase tracking-widest">
+          {selectedCategory === "All"
+            ? "All Products"
+            : `${selectedCategory} Products`}
+        </h1>
 
-      {/* Cards */}
-      {sortedDetails.length > 0 ? (
-        <div className="p-4 bg-gray-500 mt-8 rounded-lg ml-10 mr-10">
+        {/* Cards */}
+        {sortedDetails.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {sortedDetails.map((element, index) => (
               <div key={index} className="flex justify-center">
@@ -113,28 +110,10 @@ export default function Home(props) {
               </div>
             ))}
           </div>
-        </div>
-      ) : (
-        <p className="text-center text-white mt-8">No products available</p>
-      )}
-
-      {/* {details && (
-        <div className="p-4 bg-gray-500 mt-8 rounded-lg ml-10 mr-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {details.map((element, index) => (
-              <div key={index} className="flex justify-center">
-                <MediaCard given={element} />
-              </div>
-            ))}
-          </div>
-        </div>
-      )} */}
-
-      {/* <h1>search box - left side and right side - wishlist</h1>
-      <h1>carousel</h1>
-      <h1>Best choice</h1>
-      <h1>4 - cards - </h1>
-      <h1>contact form - right and location - left</h1> */}
+        ) : (
+          <p className="text-center text-white mt-8">No products available</p>
+        )}
+      </div>
     </div>
   );
 }

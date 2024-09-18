@@ -14,28 +14,28 @@ export default function NavBar() {
 
   return (
     // Login/register || Links -> #AD825C
-    <div className="NavBar bg-[#AD825C] flex  justify-between px-8 py-2 shadow-sm shadow-slate-400">
+    <div className="NavBar bg-[#AD825C] flex  justify-between px-8 py-1 shadow-sm shadow-slate-400">
       <div className="NavBar-Logo text-[#FFFFFF] cursor-pointer flex gap-5 transition-colors  ">
         {/* logo */}
 
         <img
           src={img}
           alt="logo"
-          className="w-20 h-20 rounded-full"
+          className="w-10 h-10 rounded-full"
           width={20}
           height={20}
         />
 
         {/* name */}
-        <h1 className="font-semibold text-4xl mt-5 hover:text-[40px] hover:text-amber-950 ease-in-out duration-200">
+        <h1 className="font-semibold text-2xl mt-[2px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200">
           LifeStyle!
         </h1>
       </div>
 
       <div className="NavBar-Links text-[#FFFFFF] cursor-pointer  ">
-        <ul className="NavBar-ul flex gap-8 font-semibold mt-5 ">
+        <ul className="NavBar-ul flex gap-8 font-semibold mt-[8px] uppercase">
           <li
-            className="NavBar-li text-[25px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200"
+            className="NavBar-li text-[15px] hover:text-[20px] hover:text-amber-950 ease-in-out duration-200"
             onClick={() => Navigate("/")}
           >
             Home
@@ -48,14 +48,14 @@ export default function NavBar() {
           {LoggedIn ? (
             <>
               <li
-                className="NavBar-li text-[25px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200"
+                className="NavBar-li text-[15px] hover:text-[20px] hover:text-amber-950 ease-in-out duration-200"
                 onClick={() => Navigate("/Profile")}
               >
-                Profile
+                Account
               </li>
               {/* in logout section -> local storage -> null -> setLoggedIn-> value changes  */}
               <li
-                className="NavBar-li text-[25px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200"
+                className="NavBar-li text-[15px] hover:text-[20px] hover:text-amber-950 ease-in-out duration-200"
                 onClick={() => {
                   localStorage.removeItem("Token");
                   setLoggedIn(false);
@@ -68,7 +68,7 @@ export default function NavBar() {
             </>
           ) : (
             <li
-              className="NavBar-li text-[25px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200"
+              className="NavBar-li text-[15px] hover:text-[20px] hover:text-amber-950 ease-in-out duration-200"
               onClick={() => {
                 Navigate("/login");
                 window.location.reload(); // Refresh the page after logging out

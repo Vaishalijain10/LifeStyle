@@ -112,4 +112,38 @@ UserRouter.post("/auth-profile", async (req, res) => {
     });
 });
 
+// route setup for edit Profile
+UserRouter.put("/edit-profile", async (req, res) => {
+  console.log("Edit profile route hit");
+
+  try {
+    const user = await users.findOne({ Email: req.body.Email });
+
+    if (user) {
+      // Update the user profile fields
+      user.FullName = req.body.FullName || user.FullName;
+      user.PhoneNumber = req.body.PhoneNumber || user.PhoneNumber;
+      user.Address = req.body.Address || user.Address;
+
+      await user.save(); // Save changes to database
+
+      return res.send({
+        success: true,
+        message: "User profile updated successfully",
+      });
+    } else {
+      return res.send({
+        success: false,
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.send({
+      success: false,
+      message: "An error occurred while updating the user profile",
+    });
+  }
+});
+
 export default UserRouter;

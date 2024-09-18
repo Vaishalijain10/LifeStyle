@@ -10,6 +10,18 @@ export const RegisterUser = async (FormData) => {
   return response.data;
 };
 
+// edit user profile
+export const EditUserProfile = async (userProfile) => {
+  console.log("Reached edit profile in basic.js -> frontend api");
+  try {
+    const response = await axios.put(`${url}/edit-profile`, userProfile);
+    return response.data;
+  } catch (error) {
+    console.error("Error editing user profile:", error);
+    throw error;
+  }
+};
+
 // exporting in line 6
 
 export const LoginUser = async (FormData) => {
@@ -33,19 +45,3 @@ export const getProductDetails = async (ProductIdFromUrl) => {
   );
   return response.data;
 };
-
-// fetching user details - profile section also
-// export const getUserDetails = async (token) => {
-//   try {
-//     console.log("Fetching user details");
-//     const response = await axios.get(`${url}/userDetails`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching user details:", error);
-//     throw error; // Rethrow the error to handle it in the calling function
-//   }
-// };

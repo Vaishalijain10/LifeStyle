@@ -16,6 +16,7 @@ import ProductDetails from "./Pages/ProductDetails";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import NotFound404 from "./Pages/NotFound404";
+import EditProfile from "./Pages/EditProfile";
 
 function App() {
   // setting up route in frontend
@@ -93,7 +94,14 @@ function App() {
                 element={<ProductDetails />}
               />
 
-              <Route path="/*" element={<NotFound404 />}></Route>
+              <Route path="/*" element={<NotFound404 />} />
+
+              <Route
+                path="/EditProfile"
+                element={
+                  IsLoggedIn ? <EditProfile userData={user} /> : <Login />
+                }
+              />
             </Routes>
           </div>
           {/* Footer Component */}
