@@ -51,10 +51,10 @@ export default function Home(props) {
       {/* <h1>Home</h1> */}
       {/* Condition rendering -> before login and after login */}
 
-      <div className="flex justify-between items-center w-full p-5 bg-gray-100">
+      <div className="flex justify-between items-center w-full pl-3 pr-3  bg-[#6CBEC7] ">
         {/* Username */}
-        <div className="flex-shrink-0">
-          <p className="text-[28px] font-semibold">
+        <div className="flex-shrink-0 pt-8 ml-10  ">
+          <p className="text-[20px] font-semibold  ">
             Hey, {props.userData ? props.userData.FullName : "User!"}
           </p>
         </div>
@@ -65,7 +65,7 @@ export default function Home(props) {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="text-center p-3 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-0"
+            className="text-center p-1 w-[180px] text-black bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-0"
           >
             <option value="All">All Categories</option>
             <option value="Bangles">Bangles</option>
@@ -80,22 +80,22 @@ export default function Home(props) {
           </select>
 
           {/* Search Box */}
-          <div className="flex bg-white border border-gray-300 rounded-lg shadow-sm p-2 w-[480px]">
+          <div className="flex bg-white border border-gray-300 rounded-lg shadow-sm p-0 w-[380px] h-[38px]">
             <input
               type="text"
               placeholder="Search..."
               className="w-full p-3 text-gray-700 bg-transparent border-none focus:outline-none focus:ring-0"
             />
-            <button className="bg-[#AD825C] text-white rounded-lg p-3 hover:bg-[#8C5A4F] transition-colors duration-300 ease-in-out">
+            <button className="bg-[#AD825C] text-white rounded-lg mt-1 pl-1 pr-1 mr-1 h-[30px] hover:bg-[#8C5A4F] transition-colors duration-300 ease-in-out">
               Search
             </button>
           </div>
         </div>
       </div>
 
-      <div className="p-4 bg-gray-900 mt-8 rounded-lg ml-10 mr-10">
+      <div className="p-1 bg-[#6C4E31]  mt-3 rounded-lg ml-5 mr-5">
         {/* Display the heading based on selected category */}
-        <h1 className="text-2xl font-bold mt-8 mb-6 text-center text-white uppercase tracking-widest">
+        <h1 className="text-2xl font-bold mt-4 mb-6 text-center text-white uppercase tracking-widest">
           {selectedCategory === "All"
             ? "All Products"
             : `${selectedCategory} Products`}
@@ -103,7 +103,7 @@ export default function Home(props) {
 
         {/* Cards */}
         {sortedDetails.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 ml-5 mr-5">
             {sortedDetails.map((element, index) => (
               <div key={index} className="flex justify-center">
                 <MediaCard given={element} />

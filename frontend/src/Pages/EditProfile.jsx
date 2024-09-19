@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { EditUserProfile } from "../Api/Basic";
+import { useNavigate } from "react-router-dom";
 
 export default function EditProfile(props) {
   // fetching userData from app.js
   const UserProfile = props.userData;
-
+  const Navigate = useNavigate();
   // State for user profile (initialize with empty fields to avoid null errors)
   const [userProfile, setUserProfile] = useState({
     FullName: "",
@@ -44,7 +45,9 @@ export default function EditProfile(props) {
     try {
       // Send updated user profile to the server
       const updatedProfile = await EditUserProfile(userProfile);
+
       console.log("Profile updated successfully", updatedProfile);
+      Navigate("/");
       // Optionally, you can handle UI feedback here, like showing a success message.
     } catch (error) {
       console.error("Failed to update profile", error);

@@ -9,38 +9,97 @@ export default function Profile(props) {
   const Navigate = useNavigate();
 
   return (
-    <div className="bg-black w-[500px] h-[500px] justify-center align-center text-white">
-      {/* User Profile - name, email,PhoneNumber, Address,  */}
-
-      <container className="w-[80px] h-[80px] justify-center  align-left">
-        <h1>Personal Information</h1>
-        <div>
-          <label htmlFor="">Full Name</label>
-          <h1>{userProfile !== null && userProfile.FullName}</h1>
-          <label htmlFor="">Email</label>
-          <h1>{userProfile !== null && userProfile.Email}</h1>
-          <label htmlFor="">Phone Number</label>
-          <h1>{userProfile !== null && userProfile.PhoneNumber}</h1>
-          <label htmlFor="">Location</label>
-          <label htmlFor="">Pin Code</label>
-          <label htmlFor="">Default Address</label>
-          <h1>{userProfile !== null && userProfile.Address}</h1>
+    <div className="background-image pb-[2.78%] pt-[2.78%] h-full overflow-y-hidden no-scrollbar">
+      <div className="bg-black w-[750px] h-auto p-6 rounded-lg mx-auto mt-5 text-white">
+        {/* User Profile - name, email,PhoneNumber, Address */}
+        <div className="text-center mb-2 mt-2">
+          <h1 className="text-xl font-semibold mb-3">Personal Information</h1>
+          <div className="text-left space-y-4">
+            <div>
+              <label className="block text-sm text-gray-400">Full Name</label>
+              <input
+                type="text"
+                value={userProfile?.FullName || ""}
+                className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                readOnly
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-400">Email</label>
+              <input
+                type="email"
+                value={userProfile?.Email || ""}
+                className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                readOnly
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-400">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                value={userProfile?.PhoneNumber || ""}
+                className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                readOnly
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-400">Location</label>
+              <input
+                type="text"
+                value={userProfile?.Location || ""}
+                className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                readOnly
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-400">Pin Code</label>
+              <input
+                type="text"
+                value={userProfile?.PinCode || ""}
+                className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                readOnly
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-400">
+                Default Address
+              </label>
+              <input
+                type="text"
+                value={userProfile?.Address || ""}
+                className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                readOnly
+              />
+            </div>
+          </div>
         </div>
-      </container>
-      <br />
-      <h1
-        className="cursor-pointer"
-        onClick={() => {
-          Navigate("/EditProfile");
-        }}
-      >
-        Edit Profile
-      </h1>
-      <h1>Order History</h1>
-      <h1>Wishlist</h1>
-      <h1>Cart - add address input</h1>
 
-      <h1>Contact Support</h1>
+        {/* Buttons Section */}
+        <div className="flex flex-row space-x-4 justify-center mt-6">
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded cursor-pointer"
+            onClick={() => {
+              Navigate("/EditProfile");
+            }}
+          >
+            Edit Profile
+          </button>
+          <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
+            Order History
+          </button>
+          <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
+            Wishlist
+          </button>
+          <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
+            Cart - Add Address Input
+          </button>
+          <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
+            Contact Support
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
