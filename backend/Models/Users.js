@@ -23,6 +23,12 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  WishList: {
+    type: Array,
+  },
+  Cart: {
+    type: Array,
+  },
 });
 
 // above schema is created into model but why? -> mongodb process

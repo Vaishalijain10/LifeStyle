@@ -89,7 +89,12 @@ export default function Profile(props) {
           <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
             Order History
           </button>
-          <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
+          <button
+            className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded"
+            onClick={() => {
+              Navigate("/Wishlist");
+            }}
+          >
             Wishlist
           </button>
           <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">

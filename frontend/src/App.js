@@ -39,8 +39,8 @@ function App() {
         .then((data) => {
           if (data.status) {
             setUser(data.userInfo);
-            console.log("user details :", data.userInfo);
-            console.log("user name :", data.userInfo.FullName);
+            console.log("user details in app.js:", data.userInfo);
+            console.log("user name in app.js:", data.userInfo.FullName);
           }
         }) // Update user state with API data
         .catch((error) =>
@@ -64,26 +64,37 @@ function App() {
           <NavBar />
           <div className="content">
             <Routes>
+              {/* home */}
               <Route path="/" element={<Home userData={user} />} />
+              {/* register */}
               <Route
                 path="/Register"
                 element={IsLoggedIn ? <Home /> : <Register />}
               />
+              {/* login */}
               <Route path="/Login" element={<Login userData={user} />} />
+              {/* forgot password */}
               <Route
                 path="/ForgotPassword"
-                element={IsLoggedIn ? <Home /> : <ForgotPassword />}
+                element={
+                  IsLoggedIn ? <Home userData={user} /> : <ForgotPassword />
+                }
               />
+              {/* profile */}
               <Route path="/Profile" element={<Profile userData={user} />} />
+
               <Route path="/BestChoice" element={<BestChoice />} />
+
               <Route
                 path="/WishList"
-                element={IsLoggedIn ? <WishList /> : <Login />}
+                element={IsLoggedIn ? <WishList userData={user} /> : <Login />}
               />
+
               <Route
                 path="/MyOrders"
                 element={IsLoggedIn ? <MyOrders /> : <Login />}
               />
+
               <Route
                 path="/Cart"
                 element={IsLoggedIn ? <Cart userData={user} /> : <Login />}
@@ -91,7 +102,7 @@ function App() {
 
               <Route
                 path="/ProductDetails/:Product_id"
-                element={<ProductDetails />}
+                element={<ProductDetails userData={user} />}
               />
 
               <Route path="/*" element={<NotFound404 />} />

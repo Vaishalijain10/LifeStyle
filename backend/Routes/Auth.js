@@ -146,4 +146,46 @@ UserRouter.put("/edit-profile", async (req, res) => {
   }
 });
 
+// route setup for liked products
+UserRouter.post("/add-to-wishlist", (req, res) => {
+  console.log("Reached wishlist route for liked products");
+  //add to set is an operation
+
+  users
+    .updateOne(
+      { _id: req.body.userId },
+      { $push: { WishList: req.body.productId } }
+    )
+    .then((result) => {
+      console.log("WishList updated:", result);
+      return res.send({
+        status: true,
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating wishlist:", error);
+      return res.send({
+        status: false,
+        message: error.message,
+      });
+    });
+});
+
+// Route setup for removing from wishlist
+UserRouter.post("/remove-from-wishlist", (req, res) => {
+  console.log("reached to remove product from wish List");
+  const { userId, productId } = req.body;
+
+  users
+    .updateOne({ _id: userId }, { $pull: { WishList: productId } })
+    .then((result) => {
+      console.log("Product removed from WishList:", result);
+      res.send({ status: true });
+    })
+    .catch((error) => {
+      console.error("Error removing product from wishlist:", error);
+      res.send({ status: false, message: error.message });
+    });
+});
+
 export default UserRouter;

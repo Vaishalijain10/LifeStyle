@@ -21,6 +21,13 @@ export default function Home(props) {
         >
           Explore Products
         </button>
+
+        <button
+          onClick={() => navigate("/Products")}
+          className="w-[200px] md:w-[20%] mb-[30px] bg-[#568382] text-white px-6 py-2 text-sm font-medium uppercase rounded shadow-md hover:bg-amber-900 transition duration-150 ease-in-out hover:shadow-lg active:bg-amber-900 "
+        >
+          Users
+        </button>
       </div>
 
       <br />

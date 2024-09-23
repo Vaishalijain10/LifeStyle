@@ -3,6 +3,11 @@ import "../Style/NavBar.css";
 // importing images and storing it in img variable
 import img from "../images/LOGO.png";
 import { useNavigate } from "react-router-dom";
+import { IoMdLogOut } from "react-icons/io";
+import { IoMdLogIn } from "react-icons/io";
+import { MdManageAccounts } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+import { MdFavorite } from "react-icons/md";
 
 export default function NavBar() {
   const Navigate = useNavigate();
@@ -35,10 +40,10 @@ export default function NavBar() {
       <div className="NavBar-Links text-[#FFFFFF] cursor-pointer  ">
         <ul className="NavBar-ul flex gap-8 font-semibold mt-[8px] uppercase">
           <li
-            className="NavBar-li text-[15px] hover:text-[20px] hover:text-amber-950 ease-in-out duration-200"
+            className="NavBar-li text-[25px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200"
             onClick={() => Navigate("/")}
           >
-            Home
+            <FaHome />
           </li>
 
           {/* conditional rending -> logged in true -> display login will disappear and Profile button will display */}
@@ -48,14 +53,22 @@ export default function NavBar() {
           {LoggedIn ? (
             <>
               <li
-                className="NavBar-li text-[15px] hover:text-[20px] hover:text-amber-950 ease-in-out duration-200"
+                className="NavBar-li text-[25px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200"
                 onClick={() => Navigate("/Profile")}
               >
-                Account
+                <MdManageAccounts />
               </li>
+              {/* wish List */}
+              <li
+                className="NavBar-li text-[25px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200"
+                onClick={() => Navigate("/WishList")}
+              >
+                <MdFavorite />
+              </li>
+
               {/* in logout section -> local storage -> null -> setLoggedIn-> value changes  */}
               <li
-                className="NavBar-li text-[15px] hover:text-[20px] hover:text-amber-950 ease-in-out duration-200"
+                className="NavBar-li text-[25px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200"
                 onClick={() => {
                   localStorage.removeItem("Token");
                   setLoggedIn(false);
@@ -63,18 +76,18 @@ export default function NavBar() {
                   window.location.reload();
                 }}
               >
-                Logout
+                <IoMdLogOut />
               </li>
             </>
           ) : (
             <li
-              className="NavBar-li text-[15px] hover:text-[20px] hover:text-amber-950 ease-in-out duration-200"
+              className="NavBar-li text-[25px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200"
               onClick={() => {
                 Navigate("/login");
                 window.location.reload(); // Refresh the page after logging out
               }}
             >
-              Login
+              <IoMdLogIn />
             </li>
           )}
         </ul>

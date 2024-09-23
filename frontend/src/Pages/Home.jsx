@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getDetailsInCard } from "../Api/Basic";
-import MediaCard from "../Components/Card";
+import Card from "../Components/Card";
+import { FaSearch } from "react-icons/fa";
 
 export default function Home(props) {
   // we use "useEffect" -> when any change occur in the browser.
 
-  // array
+  // userData to send it to our component - card - to feature the like button
+  const user = props.userData;
+
+  // array - testing
   // const food = ["apple", "orange", "mango", "banana"];
 
   // making an empty object - React.useState ->
@@ -87,7 +91,7 @@ export default function Home(props) {
               className="w-full p-3 text-gray-700 bg-transparent border-none focus:outline-none focus:ring-0"
             />
             <button className="bg-[#AD825C] text-white rounded-lg mt-1 pl-1 pr-1 mr-1 h-[30px] hover:bg-[#8C5A4F] transition-colors duration-300 ease-in-out">
-              Search
+              <FaSearch />
             </button>
           </div>
         </div>
@@ -102,11 +106,11 @@ export default function Home(props) {
         </h1>
 
         {/* Cards */}
-        {sortedDetails.length > 0 ? (
+        {details.length > 0 && sortedDetails.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 ml-5 mr-5">
             {sortedDetails.map((element, index) => (
               <div key={index} className="flex justify-center">
-                <MediaCard given={element} />
+                <Card given={{ element, user }} />
               </div>
             ))}
           </div>
