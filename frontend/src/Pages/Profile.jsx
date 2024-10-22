@@ -1,10 +1,12 @@
 import React from "react";
+import {  useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function Profile(props) {
+export default function Profile() {
   // fetching from app.js
-  const userProfile = props.userData;
-  // console.log(userProfile.FullName);
+  const userProfile = useSelector((state) => state.user);
+  console.log("profile : userProfile : ", userProfile);
+ 
 
   const Navigate = useNavigate();
 
@@ -19,7 +21,7 @@ export default function Profile(props) {
               <label className="block text-sm text-gray-400">Full Name</label>
               <input
                 type="text"
-                value={userProfile?.FullName || ""}
+                value={userProfile.userData?.FullName}
                 className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 readOnly
               />
@@ -28,7 +30,7 @@ export default function Profile(props) {
               <label className="block text-sm text-gray-400">Email</label>
               <input
                 type="email"
-                value={userProfile?.Email || ""}
+                value={userProfile.userData?.Email}
                 className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 readOnly
               />
@@ -39,7 +41,7 @@ export default function Profile(props) {
               </label>
               <input
                 type="tel"
-                value={userProfile?.PhoneNumber || ""}
+                value={userProfile.userData?.PhoneNumber}
                 className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 readOnly
               />
@@ -48,7 +50,7 @@ export default function Profile(props) {
               <label className="block text-sm text-gray-400">Location</label>
               <input
                 type="text"
-                value={userProfile?.Location || ""}
+                value={userProfile.userData?.Location}
                 className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 readOnly
               />
@@ -57,7 +59,7 @@ export default function Profile(props) {
               <label className="block text-sm text-gray-400">Pin Code</label>
               <input
                 type="text"
-                value={userProfile?.PinCode || ""}
+                value={userProfile.userData?.PinCode}
                 className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 readOnly
               />
@@ -68,7 +70,7 @@ export default function Profile(props) {
               </label>
               <input
                 type="text"
-                value={userProfile?.Address || ""}
+                value={userProfile.userData?.Address}
                 className="w-full p-2 mt-1 text-gray-600 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 readOnly
               />

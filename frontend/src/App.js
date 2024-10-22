@@ -13,45 +13,20 @@ import Footer from "./Components/Footer";
 import ForgotPassword from "./Pages/ForgotPassword";
 import "./Style/app.css";
 import ProductDetails from "./Pages/ProductDetails";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import NotFound404 from "./Pages/NotFound404";
 import EditProfile from "./Pages/EditProfile";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "./redux/slices/userSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
 function App() {
-  // setting up route in frontend
-  const [IsLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("Token") !== null
-  );
-
-  const [user, setUser] = useState(null);
-
-  // creating pipeline (streams) -> modern syntax
+  const Dispatch = useDispatch();
   useEffect(() => {
-    if (IsLoggedIn) {
-      console.log("User logged in!");
-      // url -> send response -> user is valid or not
-      axios
-        .post("http://localhost:1008/users/auth-profile", {
-          Token_id: localStorage.getItem("Token"),
-        })
-        .then((response) => response.data)
-        .then((data) => {
-          if (data.status) {
-            setUser(data.userInfo);
-            console.log("user details in app.js:", data.userInfo);
-            console.log("user name in app.js:", data.userInfo.FullName);
-          }
-        }) // Update user state with API data
-        .catch((error) =>
-          console.error("Error fetching user data in app.js(frontend):", error)
-        );
-    } else {
-      console.log("User not logged in!", user);
-      setIsLoggedIn(false);
-    }
-  }, [IsLoggedIn]); // null dependency-array to run only once
-
+    // coming from userSlice
+    Dispatch(fetchUser());
+  }, []);
   return (
     <>
       <div className="App">
@@ -62,56 +37,58 @@ function App() {
           {/* NavBar Component */}
           {/*  userData={user} --> sending props */}
           <NavBar />
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           <div className="content">
             <Routes>
               {/* home */}
-              <Route path="/" element={<Home userData={user} />} />
+              <Route path="/" element={<Home />} />
               {/* register */}
-              <Route
-                path="/Register"
-                element={IsLoggedIn ? <Home /> : <Register />}
-              />
+              <Route path="/Register" element={<Register />} />
               {/* login */}
-              <Route path="/Login" element={<Login userData={user} />} />
+              <Route path="/Login" element={<Login />} />
               {/* forgot password */}
               <Route
                 path="/ForgotPassword"
-                element={
-                  IsLoggedIn ? <Home userData={user} /> : <ForgotPassword />
-                }
+                element={ <ForgotPassword />}
               />
               {/* profile */}
-              <Route path="/Profile" element={<Profile userData={user} />} />
+              <Route path="/Profile" element={<Profile />} />
 
               <Route path="/BestChoice" element={<BestChoice />} />
 
               <Route
                 path="/WishList"
-                element={IsLoggedIn ? <WishList userData={user} /> : <Login />}
+                element={ <WishList /> }
               />
 
               <Route
                 path="/MyOrders"
-                element={IsLoggedIn ? <MyOrders /> : <Login />}
+                element={<MyOrders /> }
               />
 
-              <Route
-                path="/Cart"
-                element={IsLoggedIn ? <Cart userData={user} /> : <Login />}
-              />
+              <Route path="/Cart" element={ <Cart /> } />
 
               <Route
                 path="/ProductDetails/:Product_id"
-                element={<ProductDetails userData={user} />}
+                element={<ProductDetails />}
               />
 
               <Route path="/*" element={<NotFound404 />} />
 
               <Route
                 path="/EditProfile"
-                element={
-                  IsLoggedIn ? <EditProfile userData={user} /> : <Login />
-                }
+                element={ <EditProfile /> }
               />
             </Routes>
           </div>

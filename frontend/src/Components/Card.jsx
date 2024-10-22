@@ -1,7 +1,9 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import LikeProduct from "./LikeProduct";
+// import LikeProduct from "./LikeProduct";
 import AddToCart from "./AddToCart";
+import { useSelector } from "react-redux";
+import { baseUrl } from "./functions/urls";
 
 export default function Card(props) {
   const navigate = useNavigate();
@@ -9,10 +11,10 @@ export default function Card(props) {
   const details = props.given.element;
   console.log("details img: " + details);
 
-  const user_details = props.given.user;
+  const user_details = useSelector((state) => state.user);
   console.log("user details on  card: " + user_details);
 
-  const url = `http://localhost:1008/`;
+  const url = `${baseUrl}/`;
   console.log("url image: " + url + details.images[0]);
 
   return (
@@ -41,7 +43,7 @@ export default function Card(props) {
           </h1>
 
           {/* calling like product component - giving props from parent to child*/}
-          <LikeProduct userProductDetails={{ user_details, details }} />
+          {/* <LikeProduct userProductDetails={{ user_details, details }} /> */}
         </div>
 
         {/* Price and Discount */}

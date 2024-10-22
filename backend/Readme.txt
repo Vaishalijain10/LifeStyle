@@ -17,3 +17,10 @@ npm run start -> to start single backend
         Update the user model to include verification fields.
         Secure the login route to allow only verified users.
 8.
+
+
+
+
+work -
+backend - nodemailer, password hashing (bcrypt)
+fronend - redux setup, 

@@ -1,15 +1,5 @@
 import mongoose from "mongoose";
-// Category
-// images ->
-// name ->
-// ratings ->
-// Price ->
-// discount if available
-// Net Quantity
-// Material type
-// size
-// Country of Origin
-// About the item
+
 const ProductSchema = mongoose.Schema({
   Admin: {
     type: String,

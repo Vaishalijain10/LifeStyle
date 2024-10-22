@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getProductDetails } from "../Api/Basic";
-import LikeProduct from "../Components/LikeProduct";
+// import LikeProduct from "../Components/LikeProduct";
 import AddToCart from "../Components/AddToCart";
+// import { useSelector } from "react-redux"; 
 
-export default function ProductDetails(props) {
+export default function ProductDetails() {
   // get id of the card clicked to fetch the details from the db
 
   // Use useSearchParams hook to get URL parameters
@@ -16,7 +17,7 @@ export default function ProductDetails(props) {
   // use state -> its for product details
   const [details, setDetails] = useState({});
 
-  const user_details = props.userData;
+  // const user_details = useSelector((state) => state.user);
 
   // use effect -> fetching Product Details from database and displaying through use effect
   useEffect(() => {
@@ -77,7 +78,7 @@ export default function ProductDetails(props) {
         {/* Like Button */}
         {/* calling like product component - giving props from parent to child*/}
 
-        <LikeProduct userProductDetails={{ user_details, details }} />
+        {/* <LikeProduct userProductDetails={{ user_details, details }} /> */}
 
         <h1 className="text-lg font-medium">
           Country of Origin:{" "}

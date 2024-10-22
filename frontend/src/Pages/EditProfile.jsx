@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { EditUserProfile } from "../Api/Basic";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { fetchUser } from "../redux/slices/userSlice";
 
-export default function EditProfile(props) {
+export default function EditProfile() {
   // fetching userData from app.js
-  const UserProfile = props.userData;
+  const UserProfile = useSelector((state) => state.user);
+  console.log("edit profile : UserProfile : ", UserProfile);
+
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
   // State for user profile (initialize with empty fields to avoid null errors)
   const [userProfile, setUserProfile] = useState({
-    FullName: "",
-    Email: "",
-    PhoneNumber: "",
-    Address: "",
+    FullName: UserProfile.userData?.FullName,
+    Email: UserProfile.userData?.Email,
+    PhoneNumber: UserProfile.userData?.PhoneNumber,
+    Address: UserProfile.userData?.Address,
   });
-
-  // When props.userData changes, update userProfile state
-  useEffect(() => {
-    if (UserProfile) {
-      setUserProfile(UserProfile);
-    }
-  }, [UserProfile]);
+  var { FullName, Email, PhoneNumber, Address } = userProfile;
 
   // Handle input change in form fields
   function handleInputChange(event) {
@@ -33,25 +33,31 @@ export default function EditProfile(props) {
   // Form submission handler
   async function handleProfileEdit(event) {
     event.preventDefault();
+    console.log("edit profile : trycatch-userProfile : ", userProfile);
     // Show confirmation dialog before proceeding
     const confirmSave = window.confirm(
       "Are you sure you want to save changes?"
     );
-
     if (!confirmSave) {
       // If the user clicks "Cancel", exit the function and don't save the changes
       return;
     }
     try {
       // Send updated user profile to the server
-      const updatedProfile = await EditUserProfile(userProfile);
-
-      console.log("Profile updated successfully", updatedProfile);
-      Navigate("/");
+      const data = await EditUserProfile(userProfile);
+      if (data.status) {
+        dispatch(fetchUser());
+        console.log("Profile updated successfully", data);
+        toast.success("Profile updated successfully");
+        Navigate("/Profile");
+      } else {
+        console.error("Failed to update profile", data.message);
+        toast.error(data.message);
+      }
       // Optionally, you can handle UI feedback here, like showing a success message.
     } catch (error) {
       console.error("Failed to update profile", error);
-      // Handle error here, e.g., show an error message to the user.
+      toast.error("Failed to update profile");
     }
   }
 
@@ -72,7 +78,7 @@ export default function EditProfile(props) {
             <input
               placeholder="Full Name"
               name="FullName"
-              value={userProfile.FullName || ""}
+              value={FullName}
               type="text"
               className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               onChange={handleInputChange}
@@ -82,7 +88,7 @@ export default function EditProfile(props) {
             <input
               placeholder="Email"
               name="Email"
-              value={userProfile.Email || ""}
+              value={Email}
               type="email"
               className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               onChange={handleInputChange}
@@ -92,7 +98,7 @@ export default function EditProfile(props) {
             <input
               placeholder="Phone Number"
               name="PhoneNumber"
-              value={userProfile.PhoneNumber || ""}
+              value={PhoneNumber}
               type="number"
               className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               onChange={handleInputChange}
@@ -103,7 +109,7 @@ export default function EditProfile(props) {
             <input
               placeholder="Address"
               name="Address"
-              value={userProfile.Address || ""}
+              value={Address}
               type="text"
               className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               onChange={handleInputChange}

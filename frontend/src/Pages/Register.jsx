@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Style/RegisterLoginForgotPassword.css";
 import { RegisterUser } from "../Api/Basic";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
-export default function Register(props) {
+export default function Register() {
   const Navigate = useNavigate();
-
+  const user = useSelector((state) => state.user);
   // securing url
-  if (props.userData) {
+  if (user.loggedIn) {
     Navigate("/");
   }
   // sending data in the backend -> using states and hooks
@@ -40,21 +42,21 @@ export default function Register(props) {
 
     // password = confirm password
     if (Password !== ConfirmPassword) {
-      alert("Password and confirm password does not match!");
+      toast.error("Password and confirm password does not match!");
       Navigate("/register");
       return;
     }
 
     // data sent to the database if password = confirm password
     // some other issue handling -> like network issue thats why using try catch block!
-    console.log(FormData);
+    console.log("register : formdata : ",FormData);
     try {
       const response = await RegisterUser(FormData);
-      if (response.success) {
-        alert("Registered Successfully!");
+      if (response.status) {
+        toast.success("Registered Successfully!");
         Navigate("/login");
       } else {
-        alert(
+        toast.error(
           "Email id Or Phone Number already registered. " + response.message
         );
       }

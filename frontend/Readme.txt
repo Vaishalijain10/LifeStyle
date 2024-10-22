@@ -10,8 +10,16 @@ to start -> npm start
     npm install -D tailwindcss
     npx tailwindcss init
 6. created NavBar, footer -> components and pages -> register, login and forgot password
-7.
 
+------- new aim-------------
+7.  npm i react-redux
+8.  npm i @reduxjs/toolkit
+9.  stores setup -> statemanagement globally -> store in the form of slices (features - add to cart, users-loggedIn, )
+Single source of truth -> is what state Management is all about 
+-> prop-drilling is good for simple projects upto one or two level 
+2 methods used -> useSelectors and useDispatch 
+
+data persist -> redis 
 
 
 

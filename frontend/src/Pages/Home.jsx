@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getDetailsInCard } from "../Api/Basic";
 import Card from "../Components/Card";
 import { FaSearch } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
-export default function Home(props) {
+export default function Home() {
   // we use "useEffect" -> when any change occur in the browser.
 
   // userData to send it to our component - card - to feature the like button
-  const user = props.userData;
+  const user = useSelector((state) => state.user);
 
   // array - testing
   // const food = ["apple", "orange", "mango", "banana"];
@@ -59,7 +60,7 @@ export default function Home(props) {
         {/* Username */}
         <div className="flex-shrink-0 pt-8 ml-10  ">
           <p className="text-[20px] font-semibold  ">
-            Hey, {props.userData ? props.userData.FullName : "User!"}
+            Hey, {user.loggedIn ? user.userData.FullName : "User!"}
           </p>
         </div>
 

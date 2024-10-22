@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Style/RegisterLoginForgotPassword.css";
 import { LoginUser } from "../Api/Basic";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { setAuth } from "../redux/slices/userSlice";
 
-export default function Login(props) {
+export default function Login() {
   const Navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   // securing url
-  if (props.userData) {
+  if (user.loggedIn) {
     Navigate("/");
   }
 
@@ -34,17 +39,18 @@ export default function Login(props) {
     console.log(LoginFormData);
     try {
       const response = await LoginUser(LoginFormData);
-      if (response.success) {
-        alert("Login Successfully!");
+      if (response.status) {
+        dispatch(setAuth(response.data));
+        toast.success("Login Successfully!");
         // this helps website / browser to understand weather the user has login  or not. Helps in rendering
         localStorage.setItem("Token", response.Token);
         console.log(localStorage);
         Navigate("/");
-        window.location.reload();
       } else {
-        alert("Something went wrong!");
+        toast.error("Something went wrong!", response.message);
       }
     } catch (error) {
+      toast.error("connectivity error");
       console.log(error);
     }
   }
