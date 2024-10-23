@@ -16,6 +16,7 @@ app.use(cors({ origin: ["http://localhost:3000", "http://localhost:3001"] }));
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 // user data - frontend for registration and login
 app.use("/users", UserRouter);
 // product add - frontend dashboard to add product

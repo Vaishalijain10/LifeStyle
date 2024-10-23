@@ -26,7 +26,7 @@ export async function registerController(req, res) {
     } else {
       // if user already exist than below code will work!
       console.log("Email id Or Phone Number already registered");
-      return res.send({ success: false, message: "User already exists!" });
+      return res.send({ status: false, message: "User already exists!" });
     }
   } catch (error) {
     console.log(error);
