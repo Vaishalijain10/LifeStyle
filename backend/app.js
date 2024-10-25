@@ -8,6 +8,7 @@ import dbConfig from "./Config/dbConfig.js";
 import ProductRouter from "./Routes/ProductRoute.js";
 import UserRouter from "./Routes/Auth.js";
 import bodyParser from "body-parser";
+import ProductActionRouter from "./Routes/ProductActionRoute.js";
 
 const app = express();
 
@@ -22,6 +23,9 @@ app.use("/users", UserRouter);
 // product add - frontend dashboard to add product
 app.use("/products", ProductRouter);
 
+// matching from slice
+app.use("/product-action", ProductActionRouter);
+
 // static --> to get access
 app.use(express.static("productImages"));
 
@@ -35,8 +39,6 @@ app.get("/", (req, res) => {
   res.send("get method");
 });
 
-
 app.listen(port, () => {
   console.log(`Server is listening on the ${port} port`);
 });
-

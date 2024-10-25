@@ -1,22 +1,39 @@
-import React from "react";
-import Card from "../Components/Card";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Card from "../Components/Card"; // Ensure this path is correct
+import { fetchRecords } from "../redux/slices/productAction"; // Redux action to fetch records
 
 export default function Wishlist() {
-  // user data fetching from app.js -> object - WishList - {ProductId}
+  const dispatch = useDispatch();
   const user_details = useSelector((state) => state.user);
-  console.log("WishList : userdetails : ", user_details);
+  const productAction = useSelector((state) => state.productAction);
 
-  // use effect to fetch product id from the backend in user model
+  // Fetch records on component mount
+  useEffect(() => {
+    if (user_details.userData?._id) {
+      dispatch(fetchRecords(user_details.userData._id));
+    }
+  }, [user_details.userData?._id, dispatch]);
 
-  // mapping wishlist(product id) with product id from product model
-
-  // matched product id will
+  // Filter liked products
+  const likedProducts = productAction.records.filter(
+    (record) => record.ActionType === "Like"
+  );
 
   return (
-    <div>
-      <h1>WishList Item </h1>
-      <Card getWishlistProducts={{ user_details }} />
+    <div className="p-5">
+      <h1 className="text-2xl font-bold mb-5">Your Wishlist</h1>
+      {likedProducts.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {likedProducts.map((record) => (
+            <Card key={record.ProductId} given={{ element: record }} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-lg text-gray-700">
+          Your wishlist is currently empty.
+        </p>
+      )}
     </div>
   );
 }

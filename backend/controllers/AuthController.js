@@ -38,57 +38,57 @@ export async function registerController(req, res) {
 }
 
 // login
-export async function loginController(req,res){
-    console.log("Login Reached here!!!!!!");
-    console.log(req.body);
-    try {
-      // process -> checking email id from user input and check in the database weather the email id  already exists or not.
-      // LoginUserExist -> database checking and finding email that matches with frontend user input
-      // FrontendReqLoginUserEmail -> email: req.body.email -> frontend user input
-      const FrontendReqLoginUserEmail = { Email: req.body.Email };
-      const LoginUserExist = await users.findOne(FrontendReqLoginUserEmail);
-  
-      // account already exist or not
-      if (LoginUserExist === null) {
-        console.log("User does not exist. Create an account!");
-        return res.send({
-          status: false,
-          message: "User does not exist. Create an account!",
-        });
-      }
-  
-      // displaying email id coming from backend and matching it with the user input. -> just for debugging!
-      console.log(LoginUserExist);
-  
-      // email id matching with password saved in the backend
-      // LoginUserExist.Password -> backend password
-      // req.body.Password -> user input password
-      // token -> _id is the unique code generated in mongodb used to -> to locally store the active status of user which will further help in rendering the features of website like before and after login -> changes that occurs in home page and navbar.
-      if (LoginUserExist.Password === req.body.Password) {
-        console.log("Password match successfully!");
-        return res.send({
-          status: true,
-          Token: LoginUserExist._id,
-          data: LoginUserExist,
-        });
-      }
-      // database password not equal to user input password
-      response.send({
+export async function loginController(req, res) {
+  console.log("Login Reached here!!!!!!");
+  console.log(req.body);
+  try {
+    // process -> checking email id from user input and check in the database weather the email id  already exists or not.
+    // LoginUserExist -> database checking and finding email that matches with frontend user input
+    // FrontendReqLoginUserEmail -> email: req.body.email -> frontend user input
+    const FrontendReqLoginUserEmail = { Email: req.body.Email };
+    const LoginUserExist = await users.findOne(FrontendReqLoginUserEmail);
+
+    // account already exist or not
+    if (LoginUserExist === null) {
+      console.log("User does not exist. Create an account!");
+      return res.send({
         status: false,
-        message: "Password is Incorrect!",
-      });
-    } catch (error) {
-      console.log(error);
-      res.send({
-        status: false,
-        message: "Opps! Database error!",
+        message: "User does not exist. Create an account!",
       });
     }
+
+    // displaying email id coming from backend and matching it with the user input. -> just for debugging!
+    console.log(LoginUserExist);
+
+    // email id matching with password saved in the backend
+    // LoginUserExist.Password -> backend password
+    // req.body.Password -> user input password
+    // token -> _id is the unique code generated in mongodb used to -> to locally store the active status of user which will further help in rendering the features of website like before and after login -> changes that occurs in home page and navbar.
+    if (LoginUserExist.Password === req.body.Password) {
+      console.log("Password match successfully!");
+      return res.send({
+        status: true,
+        Token: LoginUserExist._id,
+        data: LoginUserExist,
+      });
+    }
+    // database password not equal to user input password
+    response.send({
+      status: false,
+      message: "Password is Incorrect!",
+    });
+  } catch (error) {
+    console.log(error);
+    res.send({
+      status: false,
+      message: "Opps! Database error!",
+    });
+  }
 }
 
-//auth Profile 
-export async function authProfileController(req,res){
-    console.log("Reached here : auth-profile route");
+//auth Profile
+export async function authProfileController(req, res) {
+  console.log("Reached here : auth-profile route");
   // frontend id is coming here
   // fetching backend id from here
   try {
@@ -107,8 +107,8 @@ export async function authProfileController(req,res){
 }
 
 //edit Profile Controller
-export async function editProfileController(req,res){
-    console.log("Edit profile route hit");
+export async function editProfileController(req, res) {
+  console.log("Edit profile route hit");
   console.log("aUTH REQ BODY", req.body.PhoneNumber);
   try {
     const response = await users.updateOne({ Email: req.body.Email }, req.body);
@@ -135,43 +135,43 @@ export async function editProfileController(req,res){
   }
 }
 
-//add To Wishlist 
-export async function addToWishlistController(req,res){
-    console.log("Reached wishlist route for liked products");
-  //add to set is an operation
-  users
-    .updateOne(
-      { _id: req.body.userId },
-      { $push: { WishList: req.body.productId } }
-    )
-    .then((result) => {
-      console.log("WishList updated:", result);
-      return res.send({
-        status: true,
-      });
-    })
-    .catch((error) => {
-      console.error("Error updating wishlist:", error);
-      return res.send({
-        status: false,
-        message: error.message,
-      });
-    });
-}
+// //add To Wishlist
+// export async function addToWishlistController(req,res){
+//     console.log("Reached wishlist route for liked products");
+//   //add to set is an operation
+//   users
+//     .updateOne(
+//       { _id: req.body.userId },
+//       { $push: { WishList: req.body.productId } }
+//     )
+//     .then((result) => {
+//       console.log("WishList updated:", result);
+//       return res.send({
+//         status: true,
+//       });
+//     })
+//     .catch((error) => {
+//       console.error("Error updating wishlist:", error);
+//       return res.send({
+//         status: false,
+//         message: error.message,
+//       });
+//     });
+// }
 
-//remove From Wishlist
-export async function removeFromWishlistController(req,res){
-    console.log("reached to remove product from wish List");
-    const { userId, productId } = req.body;
-  
-    users
-      .updateOne({ _id: userId }, { $pull: { WishList: productId } })
-      .then((result) => {
-        console.log("Product removed from WishList:", result);
-        res.send({ status: true });
-      })
-      .catch((error) => {
-        console.error("Error removing product from wishlist:", error);
-        res.send({ status: false, message: error.message });
-      });
-}
+// //remove From Wishlist
+// export async function removeFromWishlistController(req,res){
+//     console.log("reached to remove product from wish List");
+//     const { userId, productId } = req.body;
+
+//     users
+//       .updateOne({ _id: userId }, { $pull: { WishList: productId } })
+//       .then((result) => {
+//         console.log("Product removed from WishList:", result);
+//         res.send({ status: true });
+//       })
+//       .catch((error) => {
+//         console.error("Error removing product from wishlist:", error);
+//         res.send({ status: false, message: error.message });
+//       });
+// }

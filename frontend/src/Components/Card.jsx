@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-// import LikeProduct from "./LikeProduct";
 import AddToCart from "./AddToCart";
 import { useSelector } from "react-redux";
 import { baseUrl } from "./functions/urls";
-
+import LikeProduct from "./LikeProduct";
+import DefaultImage from "../images/LOGO.png";
 export default function Card(props) {
   const navigate = useNavigate();
 
@@ -15,19 +15,34 @@ export default function Card(props) {
   console.log("user details on  card: " + user_details);
 
   const url = `${baseUrl}/`;
-  console.log("url image: " + url + details.images[0]);
+  // console.log("url image: " + url + details.images[0]);
+
+  // Ensure details.images is defined and is an array
+  const imageUrl =
+    Array.isArray(details.images) && details.images.length > 0
+      ? url + details.images[0]
+      : `${DefaultImage}`; // Replace with an actual default image URL
 
   return (
-    <div className="min-w-[200px] max-w-[250px] h-[350px] bg-black rounded-lg border-2 border-gray-300 cursor-pointer shadow-lg overflow-hidden hover:border hover:border-black">
+    <div
+      style={{ boxShadow: "0 3px 10px #52515133" }}
+      className=" min-w-[200px] max-w-[250px] h-[350px] bg-[#AD825C] rounded-sm border-2 border-gray-300 cursor-pointer shadow-lg overflow-hidden hover:border hover:border-[#AD825C]"
+    >
       {/* Image Section */}
       <div
-        className="p-1 bg-white rounded-t-lg flex justify-center overflow-hidden cursor-pointer"
+        className=" bg-white rounded-sm flex justify-center overflow-hidden cursor-pointer"
         onClick={() => navigate(`/ProductDetails/${details._id}`)}
       >
-        <img
+        {/* <img
           src={url + details.images[0]}
           alt={details.Name}
-          className="w-full h-[190px] object-cover rounded-md shadow-md border border-gray-200"
+          className="w-full h-[190px] object-cover rounded-sm shadow-md border border-gray-200"
+        /> */}
+
+        <img
+          src={imageUrl} // Use the imageUrl variable
+          alt={details.Name}
+          className="w-full h-[190px] object-cover rounded-sm shadow-md border border-gray-200"
         />
       </div>
 
@@ -42,8 +57,8 @@ export default function Card(props) {
             {details.Name}
           </h1>
 
-          {/* calling like product component - giving props from parent to child*/}
-          {/* <LikeProduct userProductDetails={{ user_details, details }} /> */}
+          {/* wishlist */}
+          <LikeProduct productId={details.ProductId} />
         </div>
 
         {/* Price and Discount */}

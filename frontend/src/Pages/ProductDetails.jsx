@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getProductDetails } from "../Api/Basic";
-// import LikeProduct from "../Components/LikeProduct";
 import AddToCart from "../Components/AddToCart";
-// import { useSelector } from "react-redux"; 
+import { baseUrl } from "../Components/functions/urls";
+// import { useSelector } from "react-redux";
 
 export default function ProductDetails() {
   // get id of the card clicked to fetch the details from the db
@@ -37,7 +37,8 @@ export default function ProductDetails() {
     fetchProductDetails();
   }, [ProductIdFromUrl]); // Add ProductIdFromUrl as a dependency
 
-  const url = `http://localhost:1008`;
+  // base url from functions
+  const url = baseUrl;
 
   return (
     <div className="p-6 bg-gray-100 rounded-lg shadow-md max-w-4xl mx-auto">

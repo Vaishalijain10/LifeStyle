@@ -15,17 +15,23 @@ import "./Style/app.css";
 import ProductDetails from "./Pages/ProductDetails";
 import NotFound404 from "./Pages/NotFound404";
 import EditProfile from "./Pages/EditProfile";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./redux/slices/userSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
+import { fetchRecords } from "./redux/slices/productAction";
 
 function App() {
   const Dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   useEffect(() => {
     // coming from userSlice
     Dispatch(fetchUser());
+    Dispatch(fetchRecords(user.userData?._id));
+    // if (user.loggedIn) {
+    //   Dispatch(fetchRecords(user.userData._id));
+    // }
   }, []);
   return (
     <>
@@ -58,26 +64,17 @@ function App() {
               {/* login */}
               <Route path="/Login" element={<Login />} />
               {/* forgot password */}
-              <Route
-                path="/ForgotPassword"
-                element={ <ForgotPassword />}
-              />
+              <Route path="/ForgotPassword" element={<ForgotPassword />} />
               {/* profile */}
               <Route path="/Profile" element={<Profile />} />
 
               <Route path="/BestChoice" element={<BestChoice />} />
 
-              <Route
-                path="/WishList"
-                element={ <WishList /> }
-              />
+              <Route path="/WishList" element={<WishList />} />
 
-              <Route
-                path="/MyOrders"
-                element={<MyOrders /> }
-              />
+              <Route path="/MyOrders" element={<MyOrders />} />
 
-              <Route path="/Cart" element={ <Cart /> } />
+              <Route path="/Cart" element={<Cart />} />
 
               <Route
                 path="/ProductDetails/:Product_id"
@@ -86,10 +83,7 @@ function App() {
 
               <Route path="/*" element={<NotFound404 />} />
 
-              <Route
-                path="/EditProfile"
-                element={ <EditProfile /> }
-              />
+              <Route path="/EditProfile" element={<EditProfile />} />
             </Routes>
           </div>
           {/* Footer Component */}
