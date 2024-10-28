@@ -19,7 +19,7 @@ export async function getAllRecords(req, res) {
   }
 }
 
-// adding wishlist
+// Product action save to db
 export async function addRecordAction(req, res) {
   console.log("ProductActionController : addRecordAction");
   try {

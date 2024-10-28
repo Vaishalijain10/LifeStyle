@@ -2,8 +2,8 @@ import express from "express";
 import {
   AddProductController,
   fetchProductsController,
+  likedProductDetails,
   ProductDetailsController,
-  wishlistController,
 } from "../controllers/ProductController.js";
 import { uploadImage } from "../Library/Multer.js";
 
@@ -21,6 +21,8 @@ ProductRouter.get("/fetchProducts", fetchProductsController);
 ProductRouter.get("/ProductDetails/:Product_id", ProductDetailsController);
 
 // route for wishlist
-ProductRouter.post("/WishList", wishlistController);
+// ProductRouter.post("/WishList", wishlistController);
+
+ProductRouter.post("/liked-product-details", likedProductDetails);
 
 export default ProductRouter;

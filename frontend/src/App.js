@@ -21,6 +21,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { fetchRecords } from "./redux/slices/productAction";
+import AddToCartPage from "./Pages/AddToCartPage";
 
 function App() {
   const Dispatch = useDispatch();
@@ -84,6 +85,8 @@ function App() {
               <Route path="/*" element={<NotFound404 />} />
 
               <Route path="/EditProfile" element={<EditProfile />} />
+
+              <Route path="/AddToCartPage" element={<AddToCartPage />} />
             </Routes>
           </div>
           {/* Footer Component */}

@@ -16,7 +16,8 @@ import Shoes from "../images/1SHOES.jpg";
 import Wallets from "../images/1WALLETS.jpg";
 import Watches from "../images/1WATCHES.jpg";
 import ALL from "../images/All.png";
-import Search from "../Components/Search";
+// import Search from "../Components/Search";
+import AdsCarousel from "../Components/AdsCarousel";
 
 export default function Home() {
   // we use "useEffect" -> when any change occur in the browser.
@@ -77,22 +78,15 @@ export default function Home() {
 
   return (
     <div className="m-5 ">
-      {/* <h1>Home</h1> */}
-      {/* Condition rendering -> before login and after login */}
-      <div className="flex justify-between items-center w-full gap-x-8 ">
-        {/* Username */}
-        <div className="flex-shrink-0 pt-0 ml-10">
-          <p className="text-[20px] font-semibold">
-            Hey, {user.loggedIn ? user.userData.FullName : "User!"}
-          </p>
-        </div>
+     
 
-        {/* Search Box */}
-        <Search />
-      </div>
+      <AdsCarousel />
 
       {/* Category Selector - Horizontal Scroll */}
-      <div className="flex overflow-x-auto space-x-4 pt-4 ml-10">
+      <h1 className="text-2xl font-bold mt-4 mb-6 text-center text-black uppercase tracking-widest">
+        Select Category
+      </h1>
+      <div className="flex overflow-x-auto space-x-4 pt-4 pb-4 ml-10">
         {categories.map((category) => (
           <div
             key={category.name}
@@ -117,7 +111,8 @@ export default function Home() {
         ))}
       </div>
 
-      <div className=" rounded-lg ">
+      {/* category name display */}
+      <div className="rounded-lg">
         <h1 className="text-2xl font-bold mt-4 mb-6 text-center text-black uppercase tracking-widest">
           {selectedCategory === "All"
             ? "All Products"
@@ -126,10 +121,10 @@ export default function Home() {
 
         {/* Cards */}
         {details.length > 0 && sortedDetails.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 ">
             {sortedDetails.map((element, index) => (
               <div key={index} className="flex justify-center">
-                <Card given={{ element, user }} />
+                <Card given={element} />
               </div>
             ))}
           </div>

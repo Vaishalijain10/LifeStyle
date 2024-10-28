@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { EditUserProfile } from "../Api/Basic";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -67,9 +67,9 @@ export default function EditProfile() {
   }
 
   return (
-    <div className="background-image pb-[2.78%] pt-[2.78%] h-full overflow-y-hidden no-scrollbar">
-      <div className="container w-[50%] m-auto border-2 border-white bg-[#AD825C]">
-        <h1 className="text-3xl text-gray-950 text-center mb-[20px] mt-[30px] px-10 text-[#ffff] font-semibold">
+    <div className="background-image pb-[2.78%] pt-[2.78%] h-full">
+      <div className="container w-[50%] border-2 border-white bg-[#AD825C] h-[69vh] overflow-y-auto">
+        <h1 className="text-3xl text-gray-950 text-center mb-[5px] mt-[0px] px-10 text-[#ffff] font-semibold">
           Edit Profile!
         </h1>
         <div className="form-transparent">
@@ -104,6 +104,21 @@ export default function EditProfile() {
               onChange={handleInputChange}
               minLength={10}
               required
+            />
+            <input
+              placeholder="State"
+              type="text"
+              className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+            />
+             <input
+              placeholder="City"
+              type="text"
+              className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+            />
+            <input
+              placeholder="Pin Code"
+              type="text"
+              className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
             />
             {/* Address */}
             <input

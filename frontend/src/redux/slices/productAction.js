@@ -5,7 +5,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { productActionUrl } from "../../Components/functions/urls";
 
-// return promise
+// return promise -> liked product
 export const fetchRecords = createAsyncThunk("fetchRecords", async (userId) => {
   const response = await axios.get(
     `${productActionUrl}/get-all-records/${userId}`

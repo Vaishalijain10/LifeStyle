@@ -4,12 +4,12 @@ import AddToCart from "./AddToCart";
 import { useSelector } from "react-redux";
 import { baseUrl } from "./functions/urls";
 import LikeProduct from "./LikeProduct";
-import DefaultImage from "../images/LOGO.png";
+import DefaultImage from "../images/HashTag.jpeg";
 export default function Card(props) {
   const navigate = useNavigate();
-
-  const details = props.given.element;
-  console.log("details img: " + details);
+  // product detail
+  const details = props.given;
+  console.log("Product details : " + details);
 
   const user_details = useSelector((state) => state.user);
   console.log("user details on  card: " + user_details);
@@ -21,7 +21,7 @@ export default function Card(props) {
   const imageUrl =
     Array.isArray(details.images) && details.images.length > 0
       ? url + details.images[0]
-      : `${DefaultImage}`; // Replace with an actual default image URL
+      : `${DefaultImage}`;
 
   return (
     <div
@@ -33,14 +33,8 @@ export default function Card(props) {
         className=" bg-white rounded-sm flex justify-center overflow-hidden cursor-pointer"
         onClick={() => navigate(`/ProductDetails/${details._id}`)}
       >
-        {/* <img
-          src={url + details.images[0]}
-          alt={details.Name}
-          className="w-full h-[190px] object-cover rounded-sm shadow-md border border-gray-200"
-        /> */}
-
         <img
-          src={imageUrl} // Use the imageUrl variable
+          src={imageUrl}
           alt={details.Name}
           className="w-full h-[190px] object-cover rounded-sm shadow-md border border-gray-200"
         />
@@ -77,13 +71,13 @@ export default function Card(props) {
             {details.MaterialType}
           </h1>
           {/* Country of Origin */}
-          <h1 className="text-[12px] font-semibold font-mono bg-[#FFBE98] text-black px-3 py-1 rounded-full mb-1 w-10 text-center">
+          <h1 className="text-[12px] font-semibold font-mono bg-[#FFBE98] text-black px-3 py-1 rounded-full mb-1 text-center">
             {details.CountryOfOrigin}
           </h1>
         </div>
 
         {/* Submit Button */}
-        <AddToCart />
+        <AddToCart productId={details.ProductId} />
       </div>
     </div>
   );

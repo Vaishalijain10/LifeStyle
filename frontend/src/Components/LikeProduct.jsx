@@ -60,7 +60,7 @@ export default function LikeProduct(props) {
       .then((res) => res.data)
       .then((res) => {
         if (res.status) {
-          dispatch(fetchRecords(user.userData._id)); // Refresh the wishlist records
+          dispatch(fetchRecords(user.userData._id));
           toast.success("Product removed from wishlist!");
         } else {
           toast.error(res.message);
