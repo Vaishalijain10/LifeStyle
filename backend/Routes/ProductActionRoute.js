@@ -3,6 +3,7 @@ import {
   addRecordAction,
   getAllRecords,
   removeRecordAction,
+  handleQuantityAction,
 } from "../controllers/ProductActionController.js";
 
 const ProductActionRouter = express.Router();
@@ -13,7 +14,7 @@ ProductActionRouter.get("/get-all-records/:userId", getAllRecords);
 ProductActionRouter.post("/add-record-action", addRecordAction);
 // delete to wishlist - wishlist
 ProductActionRouter.delete("/remove-record-action", removeRecordAction);
-
-
+// handle quantity of product
+ProductActionRouter.post("/update-quantity/", handleQuantityAction);
 
 export default ProductActionRouter;

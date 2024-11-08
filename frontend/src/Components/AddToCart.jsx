@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { productActionUrl } from "./functions/urls";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { fetchRecords } from "../redux/slices/productAction";
+import { fetchRecords, handleQuantity } from "../redux/slices/productAction";
 
 export default function AddToCart(props) {
   const user = useSelector((state) => state.user);
   // console.log(`Add to cart btn : `, user);
   const records = useSelector((state) => state.productAction.records);
   // console.log(`Add to cart btn : `, records);
+
+
 
   const dispatch = useDispatch();
 
@@ -43,24 +45,13 @@ export default function AddToCart(props) {
       });
   }
 
-  async function handleQuantity(sign) {
-    await axios
-      .put(`${productActionUrl}/update-quantity/sign`)
-      .then((res) => res.data)
-      .then((res) => {
-        if (res.status) {
-          dispatch();
-        }
-      });
-  }
+  
+  
 
   return (
     // add to cart button to activate add to cart window
     <div className=" w-full mb-[30px] bg-black text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-gray-950 transition duration-150 ease-in-out hover:shadow-lg active:bg-gray-900">
-      <div
-        className="flex flex-row gap-3 justify-center"
-        onClick={CartBtnToWindow}
-      >
+      <div className="flex flex-row gap-3 justify-center">
         {/* logged user id == fetch user id from slice  */}
         {/* records - containser user's action detail */}
         {records.find(
@@ -70,14 +61,14 @@ export default function AddToCart(props) {
         ) !== undefined ? (
           <div className="flex gap-9">
             <h1
-              onClick={handleQuantity}
+              onClick={() => dispatch(handleQuantity({ sign: "+", id: _id }))}
               className="text-[23px] hover:bg-slate-600 transition ease-in-out"
             >
               +
             </h1>
-            <h1 className="text-[25px]"> 1</h1>
+            <h1 className="text-[25px]"> {1 || records.quantity}</h1>
             <h1
-              onClick={handleQuantity}
+              onClick={() => dispatch(handleQuantity({ sign: "-", id: _id }))}
               className="text-[27px] hover:bg-slate-600 transition ease-in-out"
             >
               -
@@ -85,10 +76,15 @@ export default function AddToCart(props) {
           </div>
         ) : (
           <>
-            <TiShoppingCart className="text-[25px] hover:text-[30px]" />
-            <h1 type="submit" className="justify-center">
-              Add To Cart
-            </h1>
+            <div
+              className="flex gap-3 hover:text-red-500"
+              onClick={CartBtnToWindow}
+            >
+              <TiShoppingCart className="text-[25px] " />
+              <h1 type="submit" className="justify-center">
+                Add To Cart
+              </h1>
+            </div>
           </>
         )}
       </div>

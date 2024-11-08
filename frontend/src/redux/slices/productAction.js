@@ -14,14 +14,25 @@ export const fetchRecords = createAsyncThunk("fetchRecords", async (userId) => {
   return response.data;
 });
 
+// handle quantity
+export const handleQuantity = createAsyncThunk(
+  "handleQuantity",
+  async (obj) => {
+    const response = await axios.put(
+      `${productActionUrl}/update-quantity`,
+      obj
+    );
+    console.log(`productAction slice : handle Quantity :`, response.data);
+    return response.data;
+  }
+);
+
 const productActionSlice = createSlice({
   name: "productAction",
   initialState: {
     records: [],
   },
-  reducers: {
-    
-  },
+  reducers: {},
   extraReducers: (builders) => {
     builders.addCase(fetchRecords.rejected, (state, action) => {
       console.log("productAction slice : record rejected");
@@ -35,6 +46,5 @@ const productActionSlice = createSlice({
     });
   },
 });
-
 
 export default productActionSlice.reducer;

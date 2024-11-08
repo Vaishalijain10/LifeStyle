@@ -21,7 +21,7 @@ const productActionSchema = mongoose.Schema(
       default: 1,
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const productAction = mongoose.model("Product_Action", productActionSchema);

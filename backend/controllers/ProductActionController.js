@@ -71,3 +71,48 @@ export async function removeRecordAction(req, res) {
     });
   }
 }
+
+export async function handleQuantityAction(req, res) {
+  console.log(`ProductActionController : handleQuantityAction`);
+
+  try {
+    const { userId, productId, sign } = req.body;
+
+    let record = await productAction.findOne({
+      UserId: userId,
+      ProductId: productId,
+    });
+
+    if (!record) {
+      return res.send({
+        status: false,
+        message: "Product action not found",
+      });
+    }
+
+    if (sign === "+") {
+      record.Quantity += 1;
+    } else if (sign === "-" && record.Quantity > 1) {
+      record.Quantity -= 1;
+    } else {
+      return res.send({
+        status: false,
+        message: "Invalid quantity update",
+      });
+    }
+
+    // Save the updated record
+    await record.save();
+
+    res.send({
+      status: true,
+      data: record,
+    });
+  } catch (error) {
+    console.log("ProductActionController : handleQuantityAction : ", error);
+    res.send({
+      status: false,
+      message: error.message,
+    });
+  }
+}
