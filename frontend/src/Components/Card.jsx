@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import AddToCart from "./AddToCart";
-import { useSelector } from "react-redux";
 import { baseUrl } from "./functions/urls";
 import LikeProduct from "./LikeProduct";
 import DefaultImage from "../images/HashTag.jpeg";
@@ -9,13 +8,8 @@ export default function Card(props) {
   const navigate = useNavigate();
   // product detail
   const details = props.given;
-  console.log("Product details : " + details);
-
-  const user_details = useSelector((state) => state.user);
-  console.log("user details on  card: " + user_details);
 
   const url = `${baseUrl}/`;
-  // console.log("url image: " + url + details.images[0]);
 
   // Ensure details.images is defined and is an array
   const imageUrl =
@@ -26,7 +20,7 @@ export default function Card(props) {
   return (
     <div
       style={{ boxShadow: "0 3px 10px #52515133" }}
-      className=" min-w-[200px] max-w-[250px] h-[350px] bg-[#AD825C] rounded-sm border-2 border-gray-300 cursor-pointer shadow-lg overflow-hidden hover:border hover:border-[#AD825C]"
+      className=" w-[250px] h-[350px] bg-[#AD825C] rounded-sm border-2 border-gray-300 cursor-pointer shadow-lg overflow-hidden hover:border hover:border-[#AD825C] "
     >
       {/* Image Section */}
       <div

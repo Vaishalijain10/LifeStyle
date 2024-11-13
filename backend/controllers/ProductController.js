@@ -92,3 +92,38 @@ export async function likedProductDetails(req, res) {
     return res.send({ status: false, message: "Database connectivity issue!" });
   }
 }
+
+export async function getCartProductsController(req, res) {
+  console.log("ProductRoute : GetCartProductsController");
+  console.log(req.body);
+
+  const ids = Array.from(req.body).map((product) => product.ProductId);
+  try {
+    const response = await Product.find({ ProductId: { $in: ids } });
+    let CartProducts = [];
+    // console.log(response);
+    CartProducts = response.map((product) => {
+      var instan = { ...product }._doc;
+      instan.Quantity =
+        req.body[
+          Array.from(req.body).findIndex(
+            (ele) => ele.ProductId === product.ProductId
+          )
+        ].Quantity;
+
+      return instan;
+    });
+    console.log("THE PROROR");
+    CartProducts.forEach((product) => console.log(product));
+    return res.send({
+      status: true,
+      data: CartProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.send({
+      status: false,
+      message: error.message,
+    });
+  }
+}

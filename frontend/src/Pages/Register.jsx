@@ -49,7 +49,7 @@ export default function Register() {
 
     // data sent to the database if password = confirm password
     // some other issue handling -> like network issue thats why using try catch block!
-    console.log("register : formdata : ",FormData);
+    console.log("register : formdata : ", FormData);
     try {
       const response = await RegisterUser(FormData);
       if (response.status) {
@@ -68,12 +68,12 @@ export default function Register() {
   return (
     // forgot password and login link
     <div className="background-image pb-[2.78%] pt-[2.78%] h-full overflow-y-hidden no-scrollbar ">
-      <div className="container w-[50%] m-auto border-2 border-white bg-[#AD825C]">
-        <h1 className="text-3xl text-gray-950 text-center mb-[20px] mt-[30px] px-10 text-[#ffff] font-semibold ">
+      <div className="w-[400px] rounded-xl bg-[#ffffff78] p-2 m-auto border-2 border-white bg-[#AD825C]">
+        <h1 className="text-3xl text-gray-950 text-center mb-2 text-[#ffff] font-semibold ">
           Registration Form
         </h1>
         <div className="form-transparent">
-          <form className=" px-20">
+          <form className="">
             {/* name */}
             <input
               placeholder="Full Name"
@@ -149,7 +149,7 @@ export default function Register() {
 
             {/* Submit Button */}
             <button
-              className="w-full mb-[30px] bg-[#74512D] text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-[#78614a] transition duration-150 ease-in-out hover:shadow-lg active:bg-[#543310]"
+              className="w-full bg-[#74512D] text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-[#78614a] transition duration-150 ease-in-out hover:shadow-lg active:bg-[#543310]"
               type="Submit"
               onClick={HandleSubmit}
             >

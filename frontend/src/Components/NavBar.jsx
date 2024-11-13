@@ -12,13 +12,14 @@ import { MdFavorite } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAuth } from "../redux/slices/userSlice";
 import Search from "./Search";
+import TotalInCart from "./TotalInCart";
+import { IoNotifications } from "react-icons/io5";
 
 export default function NavBar() {
   const Navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log("navbar : user: ", user);
-
+  const pathname = window.location.pathname;
   const [active, setActive] = useState("/");
   // Function to handle navigation and set active state
   const handleNavigate = (path) => {
@@ -28,8 +29,8 @@ export default function NavBar() {
 
   return (
     // Login/register || Links -> #AD825C
-    <div className="NavBar bg-[#AD825C] flex justify-between px-8 py-1 shadow-sm shadow-slate-400 pt-2 pb-2 sticky top-0 z-50">
-      <div className="NavBar-Logo text-[#FFFFFF] cursor-pointer flex gap-5 transition-colors ">
+    <div className=" bg-[#AD825C] grid grid-cols-1 md:grid-cols-3  py-1 shadow-sm shadow-slate-400 pt-2 pb-2 sticky top-0 z-50 px-4">
+      <div className=" text-[#FFFFFF] cursor-pointer flex  gap-5 transition-colors ">
         {/* logo */}
 
         <img
@@ -41,27 +42,25 @@ export default function NavBar() {
         />
 
         {/*LifeStyle name */}
-        <h1 className="font-semibold text-2xl mt-[12px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200">
+        <h1 className="font-semibold text-2xl mt-[12px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200 invisible md:visible">
           LifeStyle!
         </h1>
       </div>
+      {/* Username */}
+      <div className="flex flex-col justify-center">
+        {user.loggedIn && (
+          <h1 className="text-[15px] font-semibold text-white text-center ">
+            {user.userData.FullName}
+          </h1>
+        )}
 
-      {/* <h1>Home</h1> */}
-      {/* Condition rendering -> before login and after login */}
-      <div className="flex items-center w-full gap-2">
-        {/* Username */}
-        <div className="flex-shrink-0 pt-0 ml-60 ">
-          <p className="text-[20px] font-semibold text-white ">
-            Hey, {user.loggedIn ? user.userData.FullName : "User!"}
-          </p>
-        </div>
-
-        {/* Search Box */}
-        <Search />
+        {pathname === "/" && (
+          <Search className="flex-shrink-0 flex justify-center " />
+        )}
       </div>
 
-      <div className="NavBar-Links text-[#FFFFFF] cursor-pointer  ">
-        <ul className="NavBar-ul flex gap-8 font-semibold mt-[15px] uppercase">
+      <div className="NavBar-Links text-[#FFFFFF] flex justify-end w-full cursor-pointer absolute  md:relative top-0">
+        <ul className="NavBar-ul flex justify-center gap-8 font-semibold mt-[15px] uppercase">
           {/* home */}
           <li
             className={`NavBar-li text-[25px] ${
@@ -86,7 +85,13 @@ export default function NavBar() {
                 } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
                 onClick={() => handleNavigate("/WishList")}
               >
-                <MdFavorite />
+                <div className="relative">
+                  <MdFavorite />
+                  <TotalInCart
+                    countFor="Like"
+                    className="absolute text-[15px] bottom-4 left-2 text-white hover:text-red-400 rounded-full bg-black w-6 pl-2  "
+                  />
+                </div>
               </li>
               <li
                 className={`NavBar-li text-[25px] ${
@@ -96,7 +101,13 @@ export default function NavBar() {
                 } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
                 onClick={() => handleNavigate("/AddToCartPage")}
               >
-                <FaShoppingCart />
+                <div className="relative ">
+                  <FaShoppingCart />
+                  <TotalInCart
+                    countFor="AddToCart"
+                    className="absolute text-[15px] bottom-4 left-2 text-white hover:text-red-400 rounded-full bg-black w-6 pl-2  "
+                  />
+                </div>
               </li>
 
               <li
@@ -108,6 +119,16 @@ export default function NavBar() {
                 onClick={() => handleNavigate("/Profile")}
               >
                 <MdManageAccounts />
+              </li>
+              <li
+                className={`NavBar-li text-[25px] ${
+                  active === "/notifications"
+                    ? "text-amber-950 text-[30px] ease-in-out duration-200"
+                    : ""
+                } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
+                onClick={() => handleNavigate("/notifications")}
+              >
+                <IoNotifications />
               </li>
 
               {/* in logout section -> local storage -> null -> setLoggedIn-> value changes  */}

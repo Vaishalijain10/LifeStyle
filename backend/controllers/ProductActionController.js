@@ -23,11 +23,13 @@ export async function getAllRecords(req, res) {
 export async function addRecordAction(req, res) {
   console.log("ProductActionController : addRecordAction");
   try {
-    const addRecords = await productAction(req.body);
-    console.log("ProductActionController : addRecordAction : ", addRecords);
-    await addRecords.save();
-    res.send({
+    const addRecord = await productAction(req.body);
+    await addRecord.save();
+    const productRecord = await productAction.findOne(req.body);
+    console.log(productRecord);
+    return res.send({
       status: true,
+      data: productRecord,
     });
   } catch (error) {
     console.log("ProductActionController : addRecordAction : ", error);
@@ -42,27 +44,13 @@ export async function addRecordAction(req, res) {
 export async function removeRecordAction(req, res) {
   console.log("ProductActionController : removeRecordAction");
   try {
-    // Find and delete the specific record for the user and product
     const removeRecords = await productAction.deleteOne({
-      UserId: req.body.UserId,
-      ProductId: req.body.ProductId,
-      ActionType: "Like", // Ensure it is a Like action if that's the type
+      _id: req.params._id,
     });
-
-    // Check if the product was successfully removed
-    if (removeRecords.deletedCount > 0) {
-      console.log("ProductActionController : Record removed successfully");
-      res.send({
-        status: true,
-        message: "Product removed from wishlist",
-      });
-    } else {
-      console.log("ProductActionController : No matching record found");
-      res.send({
-        status: false,
-        message: "Product not found in wishlist",
-      });
-    }
+    console.log(removeRecords);
+    return res.send({
+      status: removeRecords.acknowledged,
+    });
   } catch (error) {
     console.log("ProductActionController : removeRecordAction : ", error);
     res.send({
@@ -74,40 +62,23 @@ export async function removeRecordAction(req, res) {
 
 export async function handleQuantityAction(req, res) {
   console.log(`ProductActionController : handleQuantityAction`);
-
+  console.log(req.body);
   try {
-    const { userId, productId, sign } = req.body;
-
-    let record = await productAction.findOne({
-      UserId: userId,
-      ProductId: productId,
-    });
-
+    let record = await productAction.updateOne(
+      { _id: req.body.id },
+      { Quantity: req.body.Quantity }
+    );
     if (!record) {
       return res.send({
         status: false,
         message: "Product action not found",
       });
     }
-
-    if (sign === "+") {
-      record.Quantity += 1;
-    } else if (sign === "-" && record.Quantity > 1) {
-      record.Quantity -= 1;
-    } else {
+    console.log(record);
+    if (record.modifiedCount === 1)
       return res.send({
-        status: false,
-        message: "Invalid quantity update",
+        status: true,
       });
-    }
-
-    // Save the updated record
-    await record.save();
-
-    res.send({
-      status: true,
-      data: record,
-    });
   } catch (error) {
     console.log("ProductActionController : handleQuantityAction : ", error);
     res.send({

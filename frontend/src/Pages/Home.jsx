@@ -78,8 +78,6 @@ export default function Home() {
 
   return (
     <div className="m-5 ">
-     
-
       <AdsCarousel />
 
       {/* Category Selector - Horizontal Scroll */}
@@ -121,7 +119,7 @@ export default function Home() {
 
         {/* Cards */}
         {details.length > 0 && sortedDetails.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 ">
+          <div className="w-full px-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
             {sortedDetails.map((element, index) => (
               <div key={index} className="flex justify-center">
                 <Card given={element} />

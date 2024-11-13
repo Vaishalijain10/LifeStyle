@@ -5,15 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { productActionUrl } from "./functions/urls";
-import { fetchRecords } from "../redux/slices/productAction";
+import { addToRecord, fetchRecords } from "../redux/slices/productAction";
 
 export default function LikeProduct(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log("Like Product : user : ", user);
   // records are product action
   const records = useSelector((state) => state.productAction.records);
-  console.log("Like Product : (records)productAction : ", records);
 
   // user.loggedIn &&  user.WishList array -> display -> red heart in card
   async function handleEmptyHeart() {
@@ -22,25 +20,13 @@ export default function LikeProduct(props) {
       toast.error("You are not logged In!");
       return;
     }
-    await axios
-      .post(`${productActionUrl}/add-record-action`, {
+    dispatch(
+      addToRecord({
         ProductId: props.productId,
-        UserId: user.userData._id,
+        UserId: user.userData?._id,
         ActionType: "Like",
       })
-      .then((res) => res.data)
-      .then((res) => {
-        if (res.status) {
-          dispatch(fetchRecords(user.userData._id));
-          toast.success("Product added to wishlist!");
-        } else {
-          toast.error(res.message);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.message);
-      });
+    );
   }
 
   async function handleFilledHeart() {
@@ -76,10 +62,12 @@ export default function LikeProduct(props) {
     <>
       {user.loggedIn ? (
         <>
-          {records.find(
+          {records.length > 0 &&
+          records.find(
             (element) =>
               element.UserId === user.userData._id &&
-              element.ProductId === props.productId
+              element.ProductId === props.productId &&
+              element.ActionType === "Like"
           ) !== undefined ? (
             <FcLike onClick={handleFilledHeart} />
           ) : (

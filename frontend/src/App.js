@@ -22,7 +22,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { fetchRecords } from "./redux/slices/productAction";
 import AddToCartPage from "./Pages/AddToCartPage";
-
+import Notifications from "./Pages/Notifications";
 function App() {
   const Dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -87,6 +87,7 @@ function App() {
               <Route path="/EditProfile" element={<EditProfile />} />
 
               <Route path="/AddToCartPage" element={<AddToCartPage />} />
+              <Route path="/notifications" element={<Notifications />} />
             </Routes>
           </div>
           {/* Footer Component */}
