@@ -89,7 +89,7 @@ export default function NavBar() {
                   <MdFavorite />
                   <TotalInCart
                     countFor="Like"
-                    className="absolute text-[15px] bottom-4 left-2 text-white hover:text-red-400 rounded-full bg-black w-6 pl-2  "
+                    className="absolute text-[15px] bottom-4 left-4 text-white hover:text-red-400 rounded-full bg-amber-950 w-6 pl-2  "
                   />
                 </div>
               </li>
@@ -105,7 +105,7 @@ export default function NavBar() {
                   <FaShoppingCart />
                   <TotalInCart
                     countFor="AddToCart"
-                    className="absolute text-[15px] bottom-4 left-2 text-white hover:text-red-400 rounded-full bg-black w-6 pl-2  "
+                    className="absolute text-[15px] bottom-4 left-4 text-white hover:text-red-400 rounded-full bg-amber-950 w-6 pl-2  "
                   />
                 </div>
               </li>
