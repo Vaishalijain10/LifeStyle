@@ -12,6 +12,8 @@ import ProductActionRouter from "./Routes/ProductActionRoute.js";
 
 const app = express();
 
+dotenv.config();
+
 // 3000 is react port number
 // app.use(cors({ origin: ["http://localhost:3000", "http://localhost:3001"] }));
 app.use(
@@ -25,8 +27,15 @@ app.use(
   })
 );
 
+dbConfig.dbConnection();
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// testing
+app.get("/", (req, res) => {
+  res.send("Testing : backing working successfully!!");
+});
 
 // user data - frontend for registration and login
 app.use("/users", UserRouter);
@@ -39,15 +48,7 @@ app.use("/product-action", ProductActionRouter);
 // static --> to get access
 app.use(express.static("productImages"));
 
-dotenv.config();
-
-dbConfig.dbConnection();
-
 const port = process.env.PORT || 1008;
-
-app.get("/", (req, res) => {
-  res.send("get method");
-});
 
 app.listen(port, () => {
   console.log(`Server is listening on the ${port} port`);
