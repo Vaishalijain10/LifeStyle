@@ -1,4 +1,4 @@
-// axios -> help in giving and take
+// frontend/src/Api/Basic.js
 import axios from "axios";
 import { productUrl, userUrl } from "../Components/functions/urls";
 
@@ -17,7 +17,6 @@ export const EditUserProfile = async (userProfile) => {
     return response.data;
 };
 
-// exporting in line 6
 
 export const LoginUser = async (FormData) => {
   console.log("Reached login  in basic.js -> frontend api");
@@ -54,3 +53,5 @@ export const getWishlistProducts = async (productIds) => {
     throw error;
   }
 };
+
+// search product name or product category 

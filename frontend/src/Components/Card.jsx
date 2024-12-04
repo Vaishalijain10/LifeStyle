@@ -52,7 +52,7 @@ export default function Card(props) {
         {/* Price and Discount */}
         <div className="flex justify-between mb-1">
           <h1 className="text-[16px] text-green-700 font-semibold">
-            ₹{(100 - details.Discount) * 0.01 * details.Price}
+          ₹{(details.Price - (details.Price * details.Discount * 0.01)).toFixed(2)}
           </h1>
           <h1 className="text-[12px] text-green-700 font-semibold">
             Discount - {details.Discount}%

@@ -67,20 +67,20 @@ export default function EditProfile() {
   }
 
   return (
-    <div className="background-image pb-[2.78%] pt-[2.78%] h-full">
-      <div className="container w-[50%] border-2 border-white bg-[#AD825C] h-[69vh] overflow-y-auto">
-        <h1 className="text-3xl text-gray-950 text-center mb-[5px] mt-[0px] px-10 text-[#ffff] font-semibold">
+    <div className=" background-image py-5 min-h-screen flex justify-center items-center">
+      <div className=" m-5 container w-full max-w-[90%] md:max-w-[800px] p-6 rounded-lg shadow-lg">
+        <h1 className="text-2xl sm:text-3xl text-center mb-6 text-black font-semibold">
           Edit Profile!
         </h1>
         <div className="form-transparent">
-          <form className="px-20" onSubmit={handleProfileEdit}>
+          <form className="space-y-4"  onSubmit={handleProfileEdit}>
             {/* Name */}
             <input
               placeholder="Full Name"
               name="FullName"
               value={FullName}
               type="text"
-              className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               onChange={handleInputChange}
               required
             />

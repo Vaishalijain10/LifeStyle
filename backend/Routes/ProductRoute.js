@@ -5,6 +5,7 @@ import {
   likedProductDetails,
   ProductDetailsController,
   getCartProductsController,
+  searchProductsController
 } from "../controllers/ProductController.js";
 import { uploadImage } from "../Library/Multer.js";
 
@@ -21,9 +22,11 @@ ProductRouter.get("/fetchProducts", fetchProductsController);
 
 ProductRouter.get("/ProductDetails/:Product_id", ProductDetailsController);
 
-// route for wishlist
-// ProductRouter.post("/WishList", wishlistController);
-
 ProductRouter.post("/liked-product-details", likedProductDetails);
+
 ProductRouter.post("/get-cart-products", getCartProductsController);
+
+ProductRouter.get("/searchProducts",searchProductsController)
+
+
 export default ProductRouter;

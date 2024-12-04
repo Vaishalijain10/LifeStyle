@@ -6,6 +6,7 @@ import axios from "axios";
 import { productActionUrl } from "../../Components/functions/urls";
 import { toast } from "react-toastify";
 
+// fetch record
 export const fetchRecords = createAsyncThunk("fetchRecords", async (userId) => {
   const response = await axios.get(
     `${productActionUrl}/get-all-records/${userId}`
@@ -14,7 +15,6 @@ export const fetchRecords = createAsyncThunk("fetchRecords", async (userId) => {
 });
 
 // Add a new record
-
 export const addToRecord = createAsyncThunk("addToRecord", async (record) => {
   const response = await axios.post(
     `${productActionUrl}/add-record-action`,
@@ -26,6 +26,7 @@ export const addToRecord = createAsyncThunk("addToRecord", async (record) => {
     data: response.data.data,
   };
 });
+
 // handle quantity
 export const handleQuantity = createAsyncThunk(
   "handleQuantity",
@@ -42,20 +43,21 @@ export const handleQuantity = createAsyncThunk(
   }
 );
 
+// remove from record
 export const removeFromRecord = createAsyncThunk(
   "removeFromRecord",
   async (_id) => {
-    console.log("wewe");
     const response = await axios.delete(
       `${productActionUrl}/remove-record-action/${_id}`
     );
-    console.log("wwww2");
+    console.log("remove from record");
     return {
       data: response.data,
       _id: _id,
     };
   }
 );
+
 const productActionSlice = createSlice({
   name: "productAction",
   initialState: {
@@ -87,6 +89,7 @@ const productActionSlice = createSlice({
     builders.addCase(handleQuantity.rejected, (err) => {
       console.log(err);
     });
+
     builders.addCase(handleQuantity.fulfilled, (state, action) => {
       if (action.payload.status) {
         state.records.find(
@@ -94,6 +97,7 @@ const productActionSlice = createSlice({
         ).Quantity = action.payload.data.Quantity;
       }
     });
+
     builders.addCase(removeFromRecord.fulfilled, (state, action) => {
       console.log(state.records.length);
       if (action.payload.data.status) {

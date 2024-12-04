@@ -127,3 +127,25 @@ export async function getCartProductsController(req, res) {
     });
   }
 }
+
+// Search Products
+export async function searchProductsController(req, res) {
+  console.log("Searching products...");
+  const searchQuery = req.query.q; // Get search query from the URL query parameter
+  console.log(searchQuery);
+  try {
+    const products = await Product.find({
+      Admin: "Vaishali",
+      Name: { $regex: searchQuery, $options: "i" },
+    }).sort({ name: 1 });
+    console.log(products);
+    if (products.length === 0) {
+      return res.send({ status: false, message: "No products found." });
+    }
+
+    return res.send({ status: true, data: products });
+  } catch (error) {
+    console.log("Error while searching products:", error);
+    return res.send({ status: false, message: error.message });
+  }
+}

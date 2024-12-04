@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { userUrl } from "../../Components/functions/urls";
 
-// sending to app.js
+// sending to app.js - fetch user
 export const fetchUser = createAsyncThunk("fetchUser", async () => {
   if (localStorage.getItem("Token") === null)
     return {

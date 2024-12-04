@@ -21,146 +21,203 @@ export default function NavBar() {
   const dispatch = useDispatch();
   const pathname = window.location.pathname;
   const [active, setActive] = useState("/");
-  // Function to handle navigation and set active state
+
   const handleNavigate = (path) => {
     setActive(path); // Set the active path
     Navigate(path); // Navigate to the new path
   };
 
   return (
-    // Login/register || Links -> #AD825C
-    <div className=" bg-[#AD825C] grid grid-cols-1 md:grid-cols-3  py-1 shadow-sm shadow-slate-400 pt-2 pb-2 sticky top-0 z-50 px-4">
-      <div className=" text-[#FFFFFF] cursor-pointer flex  gap-5 transition-colors ">
-        {/* logo */}
-
-        <img
-          src={img}
-          alt="logo"
-          className="w-16 h-16 rounded-full"
-          width={20}
-          height={20}
-        />
-
-        {/*LifeStyle name */}
-        <h1 className="font-semibold text-2xl mt-[12px] hover:text-[30px] hover:text-amber-950 ease-in-out duration-200 invisible md:visible">
-          LifeStyle!
-        </h1>
-      </div>
-      {/* Username */}
-      <div className="flex flex-col justify-center">
-        {user.loggedIn && (
-          <h1 className="text-[15px] font-semibold text-white text-center ">
-            {user.userData.FullName}
+    <div className="bg-[#AD825C] sticky top-0 z-50 shadow-sm shadow-slate-400 px-4 py-2">
+      {/* For large screens (lg and above) */}
+      <div className="hidden md:grid md:grid-cols-3 items-center">
+        {/* LogoName Section */}
+        <div className="flex items-center gap-4">
+          <img
+            src={img}
+            alt="logo"
+            className="w-14 h-14 rounded-full cursor-pointer"
+          />
+          <h1 className="hidden md:block text-white font-semibold text-2xl">
+            LifeStyle!
           </h1>
-        )}
+        </div>
 
-        {pathname === "/" && (
-          <Search className="flex-shrink-0 flex justify-center " />
-        )}
+        {/* UserName and Search Box Section */}
+        <div className="flex flex-col items-center justify-center gap-2">
+          {user.loggedIn && pathname === "/" && (
+            <>
+              <h1 className="text-center text-white font-semibold text-lg">
+                {user.userData.FullName}
+              </h1>
+              <Search className="w-full" />
+            </>
+          )}
+        </div>
+
+        {/* Icons Section */}
+        <div className="flex justify-end items-center gap-6">
+          <ul className="flex items-center gap-4 text-white text-3xl">
+            <li
+              className={`${
+                active === "/" ? "text-amber-950" : ""
+              } hover:text-amber-950 transition`}
+              onClick={() => handleNavigate("/")}
+            >
+              <FaHome />
+            </li>
+            {user.loggedIn ? (
+              <>
+                <li
+                  className={`${
+                    active === "/WishList" ? "text-amber-950 text-2xl" : ""
+                  } hover:text-amber-950 transition`}
+                  onClick={() => handleNavigate("/WishList")}
+                >
+                  <div className="relative">
+                    <MdFavorite />
+                    <TotalInCart
+                      countFor="Like"
+                      className="absolute bottom-6 left-5 text-[12px] text-white rounded-full bg-amber-950 w-6 h-6 pl-2 "
+                    />
+                  </div>
+                </li>
+                <li
+                  className={`${
+                    active === "/AddToCart" ? "text-amber-950 text-2xl" : ""
+                  } hover:text-amber-950 transition`}
+                  onClick={() => handleNavigate("/AddToCartPage")}
+                >
+                  <div className="relative">
+                    <FaShoppingCart />
+                    <TotalInCart
+                      countFor="AddToCart"
+                      className="absolute bottom-6 left-5  text-[12px] text-white rounded-full bg-amber-950 w-6 h-6 pl-2 "
+                    />
+                  </div>
+                </li>
+                <li
+                  className={`${
+                    active === "/notifications" ? "text-amber-950 text-2xl" : ""
+                  } hover:text-amber-950 transition`}
+                  onClick={() => handleNavigate("/notifications")}
+                >
+                  <IoNotifications />
+                </li>
+                <li
+                  className={`${
+                    active === "/Profile" ? "text-amber-950 text-2xl" : ""
+                  } hover:text-amber-950 transition`}
+                  onClick={() => handleNavigate("/Profile")}
+                >
+                  <MdManageAccounts />
+                </li>
+                <li
+                  className="hover:text-amber-950 transition"
+                  onClick={() => {
+                    localStorage.removeItem("Token");
+                    dispatch(deleteAuth());
+                    handleNavigate("/login");
+                  }}
+                >
+                  <IoMdLogOut />
+                </li>
+              </>
+            ) : (
+              <li
+                className="hover:text-amber-950 transition"
+                onClick={() => handleNavigate("/login")}
+              >
+                <IoMdLogIn />
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
 
-      <div className="NavBar-Links text-[#FFFFFF] flex justify-end w-full cursor-pointer absolute  md:relative top-0">
-        <ul className="NavBar-ul flex justify-center gap-8 font-semibold mt-[15px] uppercase">
-          {/* home */}
-          <li
-            className={`NavBar-li text-[25px] ${
-              active === "/"
-                ? "text-amber-950 text-[30px] ease-in-out duration-200"
-                : ""
-            } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
-            onClick={() => handleNavigate("/")}
-          >
-            <FaHome />
-          </li>
+      {/* For smaller screens (md and below) */}
+      <div className="md:hidden grid gap-4">
+        {/* First row: LogoName and User/Search */}
+        <div className="flex justify-between items-center">
+          {/* LogoName Section */}
+          <div className="flex items-center gap-4">
+            <img
+              src={img}
+              alt="logo"
+              className="w-12 h-12 rounded-full cursor-pointer"
+            />
+            <h1 className="hidden sm:block text-white font-semibold text-xl">
+              LifeStyle!
+            </h1>
+          </div>
 
-          {/* logged in */}
-          {user.loggedIn ? (
-            <>
-              {/* wish List */}
-              <li
-                className={`NavBar-li text-[25px] ${
-                  active === "/WishList"
-                    ? "text-amber-950 text-[30px] ease-in-out duration-200"
-                    : ""
-                } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
-                onClick={() => handleNavigate("/WishList")}
-              >
-                <div className="relative">
-                  <MdFavorite />
-                  <TotalInCart
-                    countFor="Like"
-                    className="absolute text-[15px] bottom-4 left-4 text-white hover:text-red-400 rounded-full bg-amber-950 w-6 pl-2  "
-                  />
-                </div>
-              </li>
-              <li
-                className={`NavBar-li text-[25px] ${
-                  active === "/AddToCart"
-                    ? "text-amber-950 text-[30px] ease-in-out duration-200"
-                    : ""
-                } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
-                onClick={() => handleNavigate("/AddToCartPage")}
-              >
-                <div className="relative ">
-                  <FaShoppingCart />
-                  <TotalInCart
-                    countFor="AddToCart"
-                    className="absolute text-[15px] bottom-4 left-4 text-white hover:text-red-400 rounded-full bg-amber-950 w-6 pl-2  "
-                  />
-                </div>
-              </li>
+          {/* UserName and Search Box Section */}
+          <div className="flex flex-col items-center">
+            {user.loggedIn && (
+              <h1 className="text-center text-white font-semibold text-sm">
+                {user.userData.FullName}
+              </h1>
+            )}
+            {pathname === "/" && <Search className="w-full md:w-[50%]" />}
+          </div>
+        </div>
 
-              <li
-                className={`NavBar-li text-[25px] ${
-                  active === "/Profile"
-                    ? "text-amber-950 text-[30px] ease-in-out duration-200"
-                    : ""
-                } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
-                onClick={() => handleNavigate("/Profile")}
-              >
-                <MdManageAccounts />
-              </li>
-              <li
-                className={`NavBar-li text-[25px] ${
-                  active === "/notifications"
-                    ? "text-amber-950 text-[30px] ease-in-out duration-200"
-                    : ""
-                } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
-                onClick={() => handleNavigate("/notifications")}
-              >
-                <IoNotifications />
-              </li>
-
-              {/* in logout section -> local storage -> null -> setLoggedIn-> value changes  */}
-              <li
-                className={`NavBar-li text-[25px] ${
-                  active === "/login"
-                    ? "text-amber-950 text-[30px] ease-in-out duration-200"
-                    : ""
-                } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
-                onClick={() => {
-                  localStorage.removeItem("Token");
-                  dispatch(deleteAuth());
-                  handleNavigate("/login");
-                }}
-              >
-                <IoMdLogOut />
-              </li>
-            </>
-          ) : (
-            // log In
+        {/* Second row: Icons */}
+        <div className="flex justify-around items-center text-white text-3xl">
+          <ul className="flex gap-6 text-3xl">
             <li
-              className={`NavBar-li text-[25px] ${
-                active === "/login"
-                  ? "text-amber-950 text-[30px] ease-in-out duration-200"
-                  : ""
-              } hover:text-[30px] hover:text-amber-950 ease-in-out duration-200`}
-              onClick={() => handleNavigate("/login")}
+              className={`${
+                active === "/" ? "text-amber-950 " : ""
+              } hover:text-amber-950 transition`}
+              onClick={() => handleNavigate("/")}
             >
-              <IoMdLogIn />
+              <FaHome />
             </li>
-          )}
-        </ul>
+            {user.loggedIn ? (
+              <>
+                <li
+                  className={`${
+                    active === "/WishList" ? "text-amber-950" : ""
+                  } hover:text-amber-950 transition`}
+                  onClick={() => handleNavigate("/WishList")}
+                >
+                  <MdFavorite />
+                </li>
+                <li
+                  className={`${
+                    active === "/AddToCartPage" ? "text-amber-950 " : ""
+                  } hover:text-amber-950 transition`}
+                  onClick={() => handleNavigate("/AddToCartPage")}
+                >
+                  <FaShoppingCart />
+                </li>
+                <li
+                  className={`${
+                    active === "/notifications" ? "text-amber-950 " : ""
+                  } hover:text-amber-950 transition`}
+                  onClick={() => handleNavigate("/notifications")}
+                >
+                  <IoNotifications />
+                </li>
+                <li
+                  className={`${
+                    active === "/Profile" ? "text-amber-950 " : ""
+                  } hover:text-amber-950 transition`}
+                  onClick={() => handleNavigate("/Profile")}
+                >
+                  <MdManageAccounts />
+                </li>
+              </>
+            ) : (
+              <li
+                className="hover:text-amber-950 transition"
+                onClick={() => handleNavigate("/login")}
+              >
+                <IoMdLogIn />
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -17,8 +17,6 @@ export default function AddToCart(props) {
   const [refresh, setRefresh] = useState(true);
   const dispatch = useDispatch();
 
-  // const navigate = useNavigate();
-
   async function CartBtnToWindow() {
     if (!user.loggedIn) {
       toast.warn(`Login before add products to cart`);
@@ -51,20 +49,6 @@ export default function AddToCart(props) {
               {record !== undefined ? (
                 <div className="flex gap-9">
                   <h1
-                    onClick={() =>
-                      dispatch(
-                        handleQuantity({
-                          id: record._id,
-                          Quantity: record.Quantity + 1,
-                        })
-                      )
-                    }
-                    className="text-[23px] hover:bg-slate-600 transition ease-in-out"
-                  >
-                    +
-                  </h1>
-                  <h1 className="text-[25px] text-white"> {record.Quantity}</h1>
-                  <h1
                     onClick={() => {
                       if (record.Quantity === 1) {
                         dispatch(removeFromRecord(record._id));
@@ -81,6 +65,20 @@ export default function AddToCart(props) {
                     className="text-[27px] hover:bg-slate-600 transition ease-in-out"
                   >
                     -
+                  </h1>
+                  <h1 className="text-[25px] text-white"> {record.Quantity}</h1>
+                  <h1
+                    onClick={() =>
+                      dispatch(
+                        handleQuantity({
+                          id: record._id,
+                          Quantity: record.Quantity + 1,
+                        })
+                      )
+                    }
+                    className="text-[23px] hover:bg-slate-600 transition ease-in-out"
+                  >
+                    +
                   </h1>
                 </div>
               ) : (

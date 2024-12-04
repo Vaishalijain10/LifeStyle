@@ -52,13 +52,13 @@ export default function Wishlist() {
   }, [productAction.records]);
 
   return (
-    <div className="p-5">
+    <div className="m-5 bg-gray-100 p-5">
       <h1 className="text-3xl font-bold mt-4 mb-6 text-center text-black uppercase tracking-widest">
         Your Wishlist
       </h1>
 
       {Products.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
           {Products.map((element, index) => (
             <Card given={element} key={index} />
           ))}

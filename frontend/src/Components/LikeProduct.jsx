@@ -28,13 +28,14 @@ export default function LikeProduct(props) {
       })
     );
   }
-
+  //  remove like
   async function handleFilledHeart() {
     console.log("handle Filled Heart");
     if (!user.loggedIn) {
       toast.error("You are not logged in!");
       return;
     }
+    
     await axios
       .delete(`${productActionUrl}/remove-record-action`, {
         data: {
@@ -80,9 +81,3 @@ export default function LikeProduct(props) {
     </>
   );
 }
-
-// loggedIn ->
-// T - check -> wishlist already exit - Red heart  -> click -> "are you sure you want to remove?" -> yes -> delete : no -> remain as it is
-//              not exist -> read heart + wishlist add
-
-//  F - redirect to login + toast
