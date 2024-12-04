@@ -28,6 +28,7 @@ export default function LikeProduct(props) {
       })
     );
   }
+
   //  remove like
   async function handleFilledHeart() {
     console.log("handle Filled Heart");
@@ -35,7 +36,7 @@ export default function LikeProduct(props) {
       toast.error("You are not logged in!");
       return;
     }
-    
+
     await axios
       .delete(`${productActionUrl}/remove-record-action`, {
         data: {
