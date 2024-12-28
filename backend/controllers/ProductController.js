@@ -1,37 +1,34 @@
 import Product from "../Models/ProductModel.js";
+// import ProductImages from "../Models/ProductImageModel.js";
+import { upload } from "../library/Multer.js";
 
 //Add Product
 export async function AddProductController(req, res) {
-  console.log("Reached Add Product route");
-  console.log(req.body.ProductId);
-  console.log(req.files);
+  console.log("Reached Add Product controller");
+  // Manually invoke multer's file upload handler
+  const multerUpload = upload.single("profilePhoto");
+  multerUpload(req, res, async (err) => {
+    if (err) {
+      console.error("Error uploading file:", err.message);
+    }
 
-  let ImgArray = [];
-  Array.from(req.files).forEach((element) => {
-    ImgArray.push(element.originalname);
+    console.log("Request Body:", req.body);
+
+    try {
+      // Save product details
+      const newProduct = new Product(req.body);
+      await newProduct.save();
+
+      console.log("Product added successfully.");
+      res.send({ status: true, message: "Product added successfully." });
+    } catch (error) {
+      console.error("Error adding product:", error);
+      res.send({
+        status: false,
+        message: "Something went wrong in the database.",
+      });
+    }
   });
-
-  // backend to route
-  req.body.images = ImgArray;
-  console.log(req.body);
-
-  try {
-    const newProduct = await Product(req.body);
-    newProduct.save();
-    console.log("Product added successfully.");
-
-    // creating object and send it to the frontend
-    return res.send({
-      status: true,
-      message: "Product added successfully.",
-    });
-  } catch (error) {
-    console.log(error);
-    res.send({
-      status: false,
-      message: "Something went wrong in the database.",
-    });
-  }
 }
 
 //fetch Products
@@ -42,6 +39,7 @@ export async function fetchProductsController(req, res) {
   try {
     // where clause -> SQL AND mongo -> pass object
     const details = await Product.find({ Admin: "Vaishali" });
+    // const imagesDetails = await ProductImages.find();
     if (details == null) {
       console.log("null product details");
       return res.send({ status: false, message: "Product DataBase is empty" });
@@ -65,9 +63,17 @@ export async function ProductDetailsController(req, res) {
     const detailsOfSingleProduct = await Product.findOne({
       _id: req.params.Product_id,
     });
+    // const detailsOfSingleProductImage = await ProductImages.findOne({
+    //   ProductId: detailsOfSingleProduct.ProductId,
+    // });
 
+    console.log(detailsOfSingleProduct);
     if (detailsOfSingleProduct != null) {
-      return res.send({ status: true, data: detailsOfSingleProduct });
+      return res.send({
+        status: true,
+        data: detailsOfSingleProduct,
+        // ImageData: detailsOfSingleProductImage.ImageUrl,
+      });
     } else {
       return res.send({ status: false, message: "Invalid URL" });
     }
@@ -77,6 +83,7 @@ export async function ProductDetailsController(req, res) {
   }
 }
 
+// wishlist
 export async function likedProductDetails(req, res) {
   console.log("liked Product Details");
   console.log(req.body);
@@ -85,6 +92,7 @@ export async function likedProductDetails(req, res) {
     const likedProducts = await Product.find({
       ProductId: { $in: likedProductIds },
     });
+    // const imagesDetails = await ProductImages.find();
 
     res.send({ status: true, data: likedProducts });
   } catch (error) {
@@ -92,7 +100,7 @@ export async function likedProductDetails(req, res) {
     return res.send({ status: false, message: "Database connectivity issue!" });
   }
 }
-
+// add to cart
 export async function getCartProductsController(req, res) {
   console.log("ProductRoute : GetCartProductsController");
   console.log(req.body);

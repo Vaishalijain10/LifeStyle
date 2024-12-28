@@ -25,6 +25,7 @@ export default function Home() {
   const user = useSelector((state) => state.user);
   // making an empty object - React.useState ->
   const [details, SetDetails] = useState([]);
+
   // State to hold the selected category, you can set a default category like 'Shoes'
   const [selectedCategory, setSelectedCategory] = useState("All");
   const dispatch = useDispatch();
@@ -37,7 +38,9 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const response = await getDetailsInCard();
+        // console.log("testing : " + response);
         if (response.status) {
+          console.log("testing : " + response.data);
           SetDetails(response.data); // Load all product details
         }
       } catch (error) {
@@ -122,7 +125,7 @@ export default function Home() {
           <div className="w-full px-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {sortedDetails.map((element, index) => (
               <div key={index} className="flex justify-center">
-                <Card given={element} />
+                <Card given={{ element }} />
               </div>
             ))}
           </div>

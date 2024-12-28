@@ -19,7 +19,7 @@ export async function getAllRecords(req, res) {
   }
 }
 
-// Product action save to db
+// Product action save to db - wishlist
 export async function addRecordAction(req, res) {
   console.log("ProductActionController : addRecordAction");
   try {
@@ -44,9 +44,7 @@ export async function addRecordAction(req, res) {
 export async function removeRecordAction(req, res) {
   console.log("ProductActionController : removeRecordAction");
   try {
-    const removeRecords = await productAction.deleteOne({
-      _id: req.params._id,
-    });
+    const removeRecords = await productAction.deleteOne(req.body);
     console.log(removeRecords);
     return res.send({
       status: removeRecords.acknowledged,

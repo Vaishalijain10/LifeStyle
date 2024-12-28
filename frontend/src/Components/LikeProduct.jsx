@@ -36,14 +36,11 @@ export default function LikeProduct(props) {
       toast.error("You are not logged in!");
       return;
     }
-
     await axios
-      .delete(`${productActionUrl}/remove-record-action`, {
-        data: {
-          ProductId: props.productId,
-          UserId: user.userData._id,
-          ActionType: "RemoveLike",
-        },
+      .post(`${productActionUrl}/remove-record-action`, {
+        ProductId: props.productId,
+        UserId: user.userData._id,
+        ActionType: "Like",
       })
       .then((res) => res.data)
       .then((res) => {

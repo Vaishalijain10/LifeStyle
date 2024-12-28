@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { baseUrl, productUrl } from "../Components/functions/urls";
+import { productUrl } from "../Components/functions/urls";
 import { toast } from "react-toastify";
 import { TiShoppingCart } from "react-icons/ti";
 import { useNavigate } from "react-router-dom"; // For navigation
@@ -65,20 +65,13 @@ export default function AddToCartPage() {
   const deliveryCharge = subtotal < 3000 ? 3 * 5 : 0; // Assuming 5km for now
   const finalTotal = subtotal + deliveryCharge;
 
-  const getImageUrl = (images) => {
-    // Ensure images is defined, is an array, and contains valid entries
-    console.log("Img testing : " + baseUrl + "/" + images[0]);
-    return Array.isArray(images) && images.length > 0 && images[0]
-      ? `${baseUrl}/${images[0]}`
-      : DefaultImage;
-  };
-
   const handleDelete = (product) => {
     const recordToDelete = records.find(
       (record) =>
         record.ProductId === product.ProductId &&
         record.ActionType === "AddToCart"
     );
+    console.log("handle delete : ", recordToDelete);
     if (recordToDelete) {
       setSelectedProduct(recordToDelete);
     } else {
@@ -94,6 +87,7 @@ export default function AddToCartPage() {
     }
 
     console.log("Dispatching removeFromRecord with: ", selectedProduct._id);
+    console.log("selected product  ", selectedProduct);
     dispatch(removeFromRecord(selectedProduct._id))
       .then((result) => {
         if (result.payload.data.status) {
@@ -197,7 +191,7 @@ export default function AddToCartPage() {
                 >
                   {/* Product Image */}
                   <img
-                    src={getImageUrl(product.images)}
+                    src={product.ProductImages[0] || DefaultImage}
                     alt={product.Name}
                     className="w-full h-40 object-cover mb-4 border-gray-200 rounded-lg p-1 border-[1px]"
                   />

@@ -14,12 +14,11 @@ const app = express();
 
 dotenv.config();
 
-// 3000 is react port number
-// app.use(cors({ origin: ["http://localhost:3000", "http://localhost:3001"] }));
 app.use(
   cors({
     origin: [
-      "http://localhost:3000", // For local testing
+      "http://localhost:1234", // For local frontend
+      "http://localhost:1235", // For local  frontend-dashboard
       process.env.FRONTEND_URL, // Deployed frontend
     ],
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods

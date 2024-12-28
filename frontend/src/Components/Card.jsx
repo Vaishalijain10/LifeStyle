@@ -1,21 +1,18 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import AddToCart from "./AddToCart";
-import { baseUrl } from "./functions/urls";
+// import { baseUrl } from "./functions/urls";
 import LikeProduct from "./LikeProduct";
 import DefaultImage from "../images/HashTag.jpeg";
 export default function Card(props) {
   const navigate = useNavigate();
   // product detail
-  const details = props.given;
-
-  const url = `${baseUrl}/`;
+  const details = props.given.element;
 
   // Ensure details.images is defined and is an array
-  const imageUrl =
-    Array.isArray(details.images) && details.images.length > 0
-      ? url + details.images[0]
-      : `${DefaultImage}`;
+  const ProductImageUrl = details.ProductImages[0] || `${DefaultImage}`;
+
+  // console.log(imageUrl);
 
   return (
     <div
@@ -28,7 +25,7 @@ export default function Card(props) {
         onClick={() => navigate(`/ProductDetails/${details._id}`)}
       >
         <img
-          src={imageUrl}
+          src={ProductImageUrl}
           alt={details.Name}
           className="w-full h-[190px] object-cover rounded-sm shadow-md border border-gray-200"
         />
@@ -52,7 +49,10 @@ export default function Card(props) {
         {/* Price and Discount */}
         <div className="flex justify-between mb-1">
           <h1 className="text-[16px] text-green-700 font-semibold">
-          ₹{(details.Price - (details.Price * details.Discount * 0.01)).toFixed(2)}
+            ₹
+            {(details.Price - details.Price * details.Discount * 0.01).toFixed(
+              2
+            )}
           </h1>
           <h1 className="text-[12px] text-green-700 font-semibold">
             Discount - {details.Discount}%

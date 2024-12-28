@@ -20,10 +20,6 @@ UserRouter.get("/auth-profile/:user_id", authProfileController);
 // route setup for edit Profile
 UserRouter.put("/edit-profile", editProfileController);
 
-// // route setup for liked products
-// UserRouter.post("/add-to-wishlist", addToWishlistController);
 
-// // Route setup for removing from wishlist
-// UserRouter.post("/remove-from-wishlist", removeFromWishlistController);
 
 export default UserRouter;

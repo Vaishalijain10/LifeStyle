@@ -37,7 +37,7 @@ const UserSchema = mongoose.Schema(
       required: true,
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 // above schema is created into model but why? -> mongodb process

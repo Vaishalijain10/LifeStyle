@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getProductDetails } from "../Api/Basic";
 import AddToCart from "../Components/AddToCart";
-import { baseUrl } from "../Components/functions/urls";
+// import { baseUrl } from "../Components/functions/urls";
 import { IoArrowBackCircle } from "react-icons/io5";
 export default function ProductDetails() {
   // get id of the card clicked to fetch the details from the db
@@ -15,6 +15,7 @@ export default function ProductDetails() {
 
   // use state -> its for product details
   const [details, setDetails] = useState({});
+
   const navigate = useNavigate();
   // const user_details = useSelector((state) => state.user);
 
@@ -24,7 +25,6 @@ export default function ProductDetails() {
       try {
         const response = await getProductDetails(ProductIdFromUrl);
         if (response.status) {
-          console.log("Single product data: ", response.data);
           setDetails(response.data);
         } else {
           console.log(response.message);
@@ -34,10 +34,8 @@ export default function ProductDetails() {
       }
     }
     fetchProductDetails();
-  }, [ProductIdFromUrl]); // Add ProductIdFromUrl as a dependency
-
-  // base url from functions
-  const url = baseUrl;
+  }, [ProductIdFromUrl]);
+  // const imgUrl = details.ProductImages;
 
   return (
     <div className="m-5 pt-5 pl-5 pr-5 bg-gray-100 rounded-lg shadow-md max-w-6xl mx-auto overflow-auto max-h-[508px] ">
@@ -56,22 +54,23 @@ export default function ProductDetails() {
       <div className="flex justify-center gap-12 items-center">
         {/* Left section: Product Images */}
         <div className="flex flex-wrap justify-center gap-4 w-1/3">
-          {details && details.images && details.images.length > 0 ? (
-            details.images.slice(0, 6).map((element, index) => (
-              <div
-                key={index}
-                className="w-[150px] h-[150px] bg-yellow-200 rounded-lg overflow-hidden"
-              >
-                <img
-                  src={`${url}/${element}`}
-                  alt="Product"
-                  className="w-full h-full object-cover rounded-lg shadow-lg"
-                />
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-red-500">No images available</p>
-          )}
+          {details.ProductImages?.length > 0 &&
+            details.ProductImages.map((image, index) => {
+              return (
+                <div
+                  key={index}
+                  className="w-[150px] h-[150px] bg-yellow-200 rounded-lg overflow-hidden"
+                >
+                  <img
+                    src={`${image}`}
+                    alt="Product"
+                    className="w-full h-full object-cover rounded-lg shadow-lg"
+                  />
+                </div>
+              );
+            })}
+
+          {/* <p className="text-center text-red-500">No images available</p> */}
         </div>
 
         {/* Right section: Product Details */}

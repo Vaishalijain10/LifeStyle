@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { AddProduct } from "../Api/Basic";
 import { useNavigate } from "react-router-dom";
+// import { toast } from "react-toastify";
 
 function AddProducts() {
   const Navigate = useNavigate();
+
   // sending data in the backend -> using states and hooks
-  // initial state -> Initially setting variables names as empty which will be further given input by user and send it to backend.
-  // value in input field = form data field
-  const [files, setFiles] = useState([]);
-  // dummy data base!!
+  const [loading, setLoading] = useState(false);
+
+  // initial state for staticData -> Keeps track of the product information
   const [staticData, SetStaticData] = useState({
     Admin: "Vaishali",
     ProductCategory: "Shoes",
@@ -22,10 +23,11 @@ function AddProducts() {
     CountryOfOrigin: "USA",
     AboutItem:
       "Pure Black shiny high heels made of USA based ACRYLIC material eye-catching comforting heels, Party wear and amazing looks",
+    ProductImages: [],
   });
 
-  // assigning values to form data -> input made by user is save in the form data.
-  var {
+  // Destructure form data for convenience
+  const {
     Admin,
     ProductCategory,
     Name,
@@ -37,57 +39,99 @@ function AddProducts() {
     SizeOfProduct,
     CountryOfOrigin,
     AboutItem,
+    ProductImages,
   } = staticData;
 
-  // dropdown Product Category
+  // Handles input change for text inputs and dropdowns
   function HandleChange(event) {
-    // console.log(event.target.value);
-    SetStaticData((prev) => {
-      return { ...prev, [event.target.name]: event.target.value };
-    });
+    SetStaticData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
   }
 
-  // onClick event activated
-  // AddProduct is equal to the basic.js in frontend dashboard
+  const handleFileChange = async (e) => {
+    const files = Array.from(e.target.files);
+    // max image - 6
+    if (files.length > 6) {
+      alert("You can only upload a maximum of 6 images.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const imageUrls = [];
+      // upload each image in cloudinary - uploadImage function
+      for (const file of files) {
+        const imageUrl = await uploadImage(file);
+        imageUrls.push(imageUrl);
+      }
+
+      SetStaticData((prev) => ({
+        ...prev,
+        ProductImages: [...prev.ProductImages, ...imageUrls],
+      }));
+      console.log(staticData);
+      alert("All images uploaded successfully!");
+    } catch (error) {
+      alert("Failed to upload one or more images. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // cloud function
+  const uploadImage = async (file) => {
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "LifeStyle");
+      data.append("cloud_name", "vaishalijain");
+
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/vaishalijain/image/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const result = await response.json();
+      return result.url;
+    } catch (error) {
+      throw new Error("Image upload failed");
+    }
+  };
+
+  // Form submit handler
   async function HandleSubmit(event) {
     event.preventDefault();
-    // testing  form data
-    // const FormData = { name: "Product", id: 3 };
-    if (files.length < 1) {
-      return alert("Must Pick at least 1 picture");
-    } else if (files.length > 6) {
-      return alert(
-        "You can pick at most 6 images. Subscribe Premium for more images"
-      );
-    } else {
-      console.log("Something Something!");
-    }
+
     const ProductId = ProductCategory + "-" + Date.now();
     const formData = new FormData();
 
-    files.forEach((ele, index) => {
-      // modified file name
-      formData.append("files", ele, `${ProductId}-${index}.jpg`);
-    });
+    // Append all staticData fields to the FormData
     Object.keys(staticData).forEach((key) => {
-      formData.append(key, staticData[key]);
+      if (key === "ProductImages") {
+        staticData.ProductImages.forEach((imageUrl, index) => {
+          formData.append(`ProductImages[${index}]`, imageUrl);
+        });
+      } else {
+        formData.append(key, staticData[key]);
+      }
     });
 
     formData.append("ProductId", ProductId);
-    console.log(formData);
 
     try {
       const response = await AddProduct(formData);
-      console.log(response);
       if (response.status) {
-        alert("Product added Successfully!");
+        alert("Product added successfully!");
         Navigate("/Products");
       } else {
         alert(response.message);
       }
     } catch (error) {
-      alert("A technical error occurred. We are sorry. Report");
-      console.log("handle submit error :", error);
+      alert("Unable to add product. Report!");
+      console.log("handle submit error: ", error);
     }
   }
 
@@ -146,7 +190,7 @@ function AddProducts() {
               name="Name"
               value={Name}
               onChange={HandleChange}
-              type="String"
+              type="text"
               className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
@@ -157,7 +201,7 @@ function AddProducts() {
               name="StockAvailable"
               value={StockAvailable}
               onChange={HandleChange}
-              type="Number"
+              type="number"
               className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
@@ -168,12 +212,10 @@ function AddProducts() {
               name="Rating"
               value={Rating}
               onChange={HandleChange}
-              type="Number"
+              type="number"
               className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
-            {/* // Price -> // discount if available // Net Quantity // Material
-              type // size // Country of Origin // About the item */}
 
             {/* Price */}
             <input
@@ -181,7 +223,7 @@ function AddProducts() {
               name="Price"
               value={Price}
               onChange={HandleChange}
-              type="Number"
+              type="number"
               className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
@@ -192,7 +234,7 @@ function AddProducts() {
               name="Discount"
               value={Discount}
               onChange={HandleChange}
-              type="Number"
+              type="number"
               className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
@@ -203,7 +245,7 @@ function AddProducts() {
               name="MaterialType"
               value={MaterialType}
               onChange={HandleChange}
-              type="String"
+              type="text"
               className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
@@ -214,7 +256,7 @@ function AddProducts() {
               name="SizeOfProduct"
               value={SizeOfProduct}
               onChange={HandleChange}
-              type="Number"
+              type="number"
               className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
@@ -225,7 +267,7 @@ function AddProducts() {
               name="CountryOfOrigin"
               value={CountryOfOrigin}
               onChange={HandleChange}
-              type="String"
+              type="text"
               className="h-[35px] w-full mb-3 px-4 py-1 text-[20px] text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               required
             />
@@ -244,7 +286,7 @@ function AddProducts() {
             {/* image */}
             <div className="image-upload">
               <label
-                htmlFor="image-upload"
+                htmlFor="ProductImages"
                 className="text-white px-3 text-[12px]"
               >
                 Choose Images (Max 6)
@@ -254,15 +296,22 @@ function AddProducts() {
                 type="file"
                 id="ProductImages"
                 name="ProductImages"
-                multiple="6"
+                multiple
                 accept="image/*"
-                onChange={(event) => {
-                  setFiles(Array.from(event.target.files));
-                }}
+                onChange={handleFileChange}
               />
+              {ProductImages &&
+                ProductImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Product ${index + 1}`}
+                    width="100"
+                  />
+                ))}
             </div>
 
-            {/* button */}
+            {/* Submit button */}
             <button
               className="w-full mb-[30px] bg-[rgb(46,166,175)] text-white px-7 py-3 text-sm font-semibold uppercase rounded hover:bg-[rgb(218,68,248)]"
               type="submit"

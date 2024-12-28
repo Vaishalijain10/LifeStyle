@@ -13,7 +13,7 @@ ProductActionRouter.get("/get-all-records/:userId", getAllRecords);
 //Data of product action - wishlist
 ProductActionRouter.post("/add-record-action", addRecordAction);
 // delete to wishlist - wishlist
-ProductActionRouter.delete("/remove-record-action/:_id", removeRecordAction);
+ProductActionRouter.post("/remove-record-action", removeRecordAction);
 // handle quantity of product
 ProductActionRouter.put("/update-quantity", handleQuantityAction);
 

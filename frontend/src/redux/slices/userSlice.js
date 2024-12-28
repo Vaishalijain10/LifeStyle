@@ -37,7 +37,6 @@ const userSlice = createSlice({
   },
   extraReducers: (builders) => {
     builders.addCase(fetchUser.fulfilled, (state, action) => {
-      console.log("hello");
       if (action.payload.status) {
         state.loggedIn = action.payload.status;
         state.userData = action.payload.data;

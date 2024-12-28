@@ -29,7 +29,6 @@ export const LoginUser = async (FormData) => {
 export const getDetailsInCard = async () => {
   console.log("Fetching card details!");
   const response = await axios.get(`${productUrl}/fetchProducts`);
-  
   return response.data;
 };
 

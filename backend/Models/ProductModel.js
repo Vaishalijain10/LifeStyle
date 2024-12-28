@@ -49,12 +49,12 @@ const ProductSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    images: {
+    ProductImages: {
       type: Array,
-      filename: String,
+      default: [],
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const Product = mongoose.model("ProductForm", ProductSchema);

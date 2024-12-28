@@ -7,11 +7,13 @@ import { productUrl } from "../Components/functions/urls";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { GiBrokenHeartZone } from "react-icons/gi";
+
 export default function Wishlist() {
   const dispatch = useDispatch();
   const user_details = useSelector((state) => state.user);
   const productAction = useSelector((state) => state.productAction);
   const [Products, setProducts] = useState([]);
+  const [imgData, setImgData] = useState([]);
   const navigate = useNavigate();
 
   // Fetch records on component mount
@@ -34,7 +36,9 @@ export default function Wishlist() {
         .then((response) => response.data)
         .then((res) => {
           if (res.status) {
+            console.log("im : "+ res.imgData);
             setProducts(res.data);
+            setImgData(res.imgData);
           } else {
             console.error("Error fetching liked product details:", res.message);
           }
@@ -48,6 +52,7 @@ export default function Wishlist() {
       LikedProductDetails();
     } else {
       setProducts([]);
+      setImgData([]);
     }
   }, [productAction.records]);
 
@@ -57,10 +62,10 @@ export default function Wishlist() {
         Your Wishlist
       </h1>
 
-      {Products.length > 0 ? (
+      {Products !== undefined && Array.from(Products).length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
           {Products.map((element, index) => (
-            <Card given={element} key={index} />
+            <Card given={{ element, imgData }} key={index} />
           ))}
         </div>
       ) : (

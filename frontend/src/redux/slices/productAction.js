@@ -14,7 +14,7 @@ export const fetchRecords = createAsyncThunk("fetchRecords", async (userId) => {
   return response.data;
 });
 
-// Add a new record
+// Add a new record - add to record
 export const addToRecord = createAsyncThunk("addToRecord", async (record) => {
   const response = await axios.post(
     `${productActionUrl}/add-record-action`,
@@ -43,14 +43,16 @@ export const handleQuantity = createAsyncThunk(
   }
 );
 
-// remove from record
+// remove from record - add to cart
 export const removeFromRecord = createAsyncThunk(
   "removeFromRecord",
   async (_id) => {
-    const response = await axios.delete(
-      `${productActionUrl}/remove-record-action/${_id}`
+    console.log("new testingggg: ", _id);
+    const response = await axios.post(
+      `${productActionUrl}/remove-record-action`,
+      { _id: _id }
     );
-    console.log("remove from record");
+
     return {
       data: response.data,
       _id: _id,
