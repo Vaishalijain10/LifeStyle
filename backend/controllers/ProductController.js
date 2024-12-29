@@ -1,6 +1,6 @@
 import Product from "../Models/ProductModel.js";
 // import ProductImages from "../Models/ProductImageModel.js";
-import { upload } from "../library/Multer.js";
+import { upload } from "../Library/Multer.js";
 
 //Add Product
 export async function AddProductController(req, res) {
